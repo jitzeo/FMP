@@ -6,7 +6,8 @@ using UnityEngine.AI;
 public class PlayerInput : MonoBehaviour
 {
     PlayerMovement playerMovement;
-    private Touch touch;
+    private float x;
+    private float z;
 
     private void Start()
     {
@@ -17,8 +18,12 @@ public class PlayerInput : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            playerMovement.Move(Input.mousePosition);   
+            //playerMovement.MoveAgent(Input.mousePosition);   
         }
+
+        x = Input.GetAxisRaw("Horizontal");
+        z = Input.GetAxisRaw("Vertical");
+        playerMovement.PlayerMove(x, z);
 
         // Mobile control
         /*if(Input.touchCount > 0)
