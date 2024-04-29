@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] NavMeshAgent navMeshAgent;
     [SerializeField] CharacterController controller;
 
+    private bool thirdDimension = true;
+
     private float velocity = 5f;
     private float rotationSpeed = 720f;
     private float gravity = -9.81f;
@@ -29,13 +31,19 @@ public class PlayerMovement : MonoBehaviour
         {
             direction = new Vector3(0f, z, 0f) * velocity;
         }
+        else if (!thirdDimension)
+        {
+            direction = new Vector3(x, 0f, 0f).normalized * velocity;
+            direction.y = gravity;
+        }
         else
         {
             direction = new Vector3(x, 0f, z).normalized * velocity;
-            direction = Quaternion.AngleAxis(45f, Vector3.up) * direction;
+            float angle = Vector2.SignedAngle(new Vector2(cam.transform.forward.x, cam.transform.forward.z), Vector2.up);
+            direction = Quaternion.AngleAxis(angle, Vector3.up) * direction;
             direction.y = gravity;
         }
-            controller.Move(direction * Time.deltaTime);
+        controller.Move(direction * Time.deltaTime);
 
         if (direction.x != 0 || direction.z != 0)
         {
@@ -61,9 +69,30 @@ public class PlayerMovement : MonoBehaviour
     {
         controller.enabled = false;
         transform.position = activeLadder.endPos.position;
-        Debug.Log(transform.position);
         onLadder = false;
         exitLadder = false;
+        controller.enabled = true;
+    }
+
+    public void ChangePerspective()
+    {
+        controller.enabled = false;
+        thirdDimension = !thirdDimension;
+
+        if (thirdDimension)
+        {
+            Ray ray = new Ray(transform.position + new Vector3(0f, -1.5f, 1f), Vector3.forward);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y, hit.point.z + 1f);
+            }
+        }
+        else
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, -20f);
+        }
         controller.enabled = true;
     }
 

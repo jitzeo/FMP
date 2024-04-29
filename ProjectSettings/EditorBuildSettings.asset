@@ -4,7 +4,13 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Levels/Perspective21.unity
+    guid: a532f14eaab97ec41a500f9b8eb4c494
+  - enabled: 1
+    path: Assets/Scenes/Levels/Perspective1.unity
+    guid: 16608f5f973f8fa47be1981e058b79e4
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 282298df0bcc3bf4382e574a8cec265f,
       type: 2}
