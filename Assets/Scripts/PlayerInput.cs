@@ -3,10 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Yarn.Unity;
 
 public class PlayerInput : MonoBehaviour
 {
     [SerializeField] PlayerMovement playerMovement;
+    [SerializeField] IslandManager islandManager;
     private float x;
     private float z;
 
@@ -22,9 +24,9 @@ public class PlayerInput : MonoBehaviour
     private void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
-        cam = Camera.main;
-        cam2D = GameObject.Find("2D Camera").GetComponent<Camera>();
-        center = GameObject.Find("Center");
+        islandManager = GameObject.Find("IslandManager").GetComponent<IslandManager>();
+        //center = GameObject.Find("Center");
+        dialogueRunner = FindObjectOfType<DialogueRunner>();
     }
 
     void Update()
@@ -74,13 +76,15 @@ public class PlayerInput : MonoBehaviour
 
                 if (!Physics.Raycast(ray, out hit, 60f))
                 {
-                    ChangePerspective();
+                    islandManager.ChangePerspective();
                 }
             } else
             {
-                ChangePerspective();
+                islandManager.ChangePerspective();
             }
         }
+
+        DialogueDebug();
 
         // Mobile control
         /*if(Input.touchCount > 0)
@@ -99,13 +103,7 @@ public class PlayerInput : MonoBehaviour
         }*/
     }
 
-    private void ChangePerspective()
-    {
-        cam.enabled = !cam.enabled;
-        cam2D.enabled = !cam2D.enabled;
-
-        playerMovement.ChangePerspective();
-    }
+    
 
     public void SetIInstance(IInteractable interactable)
     {
@@ -115,5 +113,26 @@ public class PlayerInput : MonoBehaviour
     public void ClearIInstance()
     {
         interactableInstance = null;
+    }
+
+    [SerializeField] DialogueRunner dialogueRunner;
+    private void DialogueDebug()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            dialogueRunner.StartDialogue("IdentifyThoughts");
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            dialogueRunner.StartDialogue("Relapse");
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            dialogueRunner.StartDialogue("End");
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            dialogueRunner.StartDialogue("Start");
+        }
     }
 }

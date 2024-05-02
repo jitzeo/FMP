@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] NavMeshAgent navMeshAgent;
     [SerializeField] CharacterController controller;
 
-    private bool thirdDimension = true;
+    private bool thirdDimension = false;
 
     private float velocity = 5f;
     private float rotationSpeed = 720f;
@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        cam = Camera.main;
+        cam = GameObject.Find("Main Camera").GetComponent<Camera>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         controller = GetComponent<CharacterController>();
     }
@@ -43,7 +43,11 @@ public class PlayerMovement : MonoBehaviour
             direction = Quaternion.AngleAxis(angle, Vector3.up) * direction;
             direction.y = gravity;
         }
-        controller.Move(direction * Time.deltaTime);
+
+        if (controller.enabled)
+        {
+            controller.Move(direction * Time.deltaTime);
+        }
 
         if (direction.x != 0 || direction.z != 0)
         {

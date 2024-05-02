@@ -1,0 +1,109 @@
+﻿title: Start
+tags:
+---
+Player: Ugh, there's a hugh cliff ahead.
+Player: How am I going to get over this?
+Player: ...
+Player: I don't see a clear path.
+Player: I won't reach the goal.
+...: You can't save the village.
+...: You are failing again...
+...: You are a failure...
+...: You are no good...
+Player: I am worthless...
+
+Player: Wha... What's happening?!
+Player: I am losing vision.
+Player: The cliff! It's starting to move!
+Player: Aaagh, it's coming to get me! I need to find shelter!
+===
+
+title: Discovery
+tags:
+---
+<<wait 2f>>
+Player: Puf, puf...
+Player: Deep breathes... Deep breathes... Pfew, okay. 
+Player: I thought I was going to die!
+Player: But what... What was that?
+Player: It seemed to have passed out when hitting this cliff.
+Player: But why was there a monster all of a sudden?
+Player: It seemed to have dropped something... a stick? What does that mean?
+//?Option?
+Player: There is something about this monster. I need to inspect it further.
+Player: Aagh, it moved again! 
+Player: ... 
+Player: No, I think I am okay.
+Player: It feels like dirt... Could it have been the storm that brought this monster to life?
+//---
+
+Player: Woah... The landscape changed!
+Player: Was the monster a creation of the storm?
+Player: At least I can make progress now, let's explore!
+===
+
+title: Remarks
+tags:
+---
+Player: Is this where the stick came from?
+Player: Could this have been the teeth of the monster?
+Player: How do I get past this?
+Player: The spikes are gone now!
+Player: I am making progress!
+===
+
+title: IdentifyThoughts
+tags:
+---
+Player: Where do I go now?
+Player: How do I get to those hills?
+Player: I am stuck again.
+...: You can't save the village...
+...: You are failing again...
+Player: Aagh... These thoughts...
+Player: The scenery is changing again!
+Player: The storm is back.
+Player: The monster still seems to be passed out.
+Player: But what's making this happen?
+//?Option?
+Player: My thoughts! The storm is using my thoughts to make me anxious. 
+Player: But it all seems so real...
+Player: How do I know what to believe?
+Player: At least I know how this shift happens. That's a first step to gain control.
+Player: But this shifted landscape allows me to reach new areas.
+Player: Let's explore further.
+===
+
+title: Relapse
+tags:
+---
+Player: I still don't know how to get to the goal...
+...: You can't save the village...
+Player: Am I actually not good enough?
+...: You are failing again...
+Player: Is this how far I can go?
+...: You are a failure...
+Player: I am worthless.
+
+Player: The monster, it.. it's alive again!!
+Player: Aagh, what do I do?
+Player: The storm is talking again, I need to gain control!
+Player: The monster coming alive makes the goal reachable!
+Player: Quick, I need to move to its head!
+===
+
+title: End
+tags:
+---
+Player: I... I did it!
+Player: I made it!
+Player: My hearts still racing...
+Player: But the monster seems to be gone again.
+Player: The anxiety is slowly fading.
+Player: Deep breathes... Deep breathes...
+Player: Pfew... 
+Player: I can save the village.
+Player: I need to further learn about this storm if I will be able to beat it.
+Player: I have still much to learn, but I made it to here already.
+Player: Let's continue the journey
+===
