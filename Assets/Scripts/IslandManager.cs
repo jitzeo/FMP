@@ -4,6 +4,8 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using System.Linq;
 using System;
+using Yarn;
+using Yarn.Unity;
 
 public class IslandManager : MonoBehaviour
 {
@@ -15,6 +17,9 @@ public class IslandManager : MonoBehaviour
 
     [SerializeField] GameObject mainIsland;
     [SerializeField] GameObject island2D;
+    [SerializeField] GameObject startIsland;
+
+    [SerializeField] Transform startPosDino;
 
     private Dictionary<string, GameObject> islands = new Dictionary<string, GameObject>();
 
@@ -25,20 +30,48 @@ public class IslandManager : MonoBehaviour
         //island2D = GameObject.Find("2D Island");
         islands.Add("main", mainIsland);
         islands.Add("2D", island2D);
+        islands.Add("start", startIsland);
 
         camMain = GameObject.Find("Main Camera").GetComponent<Camera>();
         cam2D = GameObject.Find("2D Camera").GetComponent<Camera>();
     }
 
+    public void EnableIsland(string id, bool enable)
+    {
+        islands[id].SetActive(enable);
+        if(id == "2D")
+        {
+            cam2D.enabled = enable;
+            playerMovement.thirdDimension = !enable;
+        }
+        else
+        {
+            camMain.enabled = enable;
+            playerMovement.thirdDimension = enable;
+        }
+    }
+
+    [YarnCommand("change_perspective")]
     public void ChangePerspective()
     {
         camMain.enabled = !camMain.enabled;
         cam2D.enabled = !cam2D.enabled;
         foreach (GameObject island in islands.Values)
         {
-            island.SetActive(!island.activeSelf);
+            if (island != startIsland)
+            {
+                island.SetActive(!island.activeSelf);
+            }
         }
 
         playerMovement.ChangePerspective();
+    }
+
+    [YarnCommand("change_start")]
+    public void ChangeStart()
+    {
+        EnableIsland("2D", true);
+        playerMovement.Teleport(startPosDino.position);
+        EnableIsland("start", false);
     }
 }

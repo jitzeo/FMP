@@ -9,6 +9,7 @@ public class PlayerInput : MonoBehaviour
 {
     [SerializeField] PlayerMovement playerMovement;
     [SerializeField] IslandManager islandManager;
+    [SerializeField] LineView lineView;
     private float x;
     private float z;
 
@@ -19,6 +20,8 @@ public class PlayerInput : MonoBehaviour
 
     [SerializeField] Camera cam2D;
 
+    private bool freeze;
+
     private IInteractable interactableInstance;
 
     private void Start()
@@ -27,6 +30,7 @@ public class PlayerInput : MonoBehaviour
         islandManager = GameObject.Find("IslandManager").GetComponent<IslandManager>();
         //center = GameObject.Find("Center");
         dialogueRunner = FindObjectOfType<DialogueRunner>();
+        lineView = FindObjectOfType<LineView>();
     }
 
     void Update()
@@ -38,7 +42,10 @@ public class PlayerInput : MonoBehaviour
 
         x = Input.GetAxisRaw("Horizontal");
         z = Input.GetAxisRaw("Vertical");
-        playerMovement.PlayerMove(x, z);
+        if (!freeze && (x != 0 || z != 0))
+        {
+            playerMovement.PlayerMove(x, z);
+        }
 
         if (Input.GetKey(KeyCode.E))
         {
@@ -78,10 +85,16 @@ public class PlayerInput : MonoBehaviour
                 {
                     islandManager.ChangePerspective();
                 }
-            } else
+            }
+            else
             {
                 islandManager.ChangePerspective();
             }
+        }
+
+        if (Input.GetKeyDown (KeyCode.Return))
+        {
+            lineView.OnContinueClicked();
         }
 
         DialogueDebug();
@@ -113,6 +126,12 @@ public class PlayerInput : MonoBehaviour
     public void ClearIInstance()
     {
         interactableInstance = null;
+    }
+
+    [YarnCommand("freeze_player")]
+    public void Freeze()
+    {
+        freeze = !freeze;
     }
 
     [SerializeField] DialogueRunner dialogueRunner;

@@ -4,6 +4,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
+using Yarn.Unity;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -11,11 +12,19 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] NavMeshAgent navMeshAgent;
     [SerializeField] CharacterController controller;
 
-    private bool thirdDimension = false;
+    public bool thirdDimension = true;
+    
+    private bool moveToPositionBool;
+    private Vector3 moveToDirection;
+    private Vector3 moveToPosition;
+
+    private bool moveInDirectionBool;
 
     private float velocity = 5f;
     private float rotationSpeed = 720f;
     private float gravity = -9.81f;
+
+    private bool turn;
 
     private void Start()
     {
@@ -23,8 +32,25 @@ public class PlayerMovement : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         controller = GetComponent<CharacterController>();
     }
+    private void Update()
+    {
+        if (moveToPositionBool && moveToPosition != null)
+        {
+            PlayerMove(moveToDirection.x, moveToDirection.z, moveToPosition);
+        }
 
-    public void PlayerMove(float x, float z)
+        if (moveInDirectionBool && moveToDirection != null)
+        {
+            PlayerMove(moveToDirection.x, moveToDirection.z);
+        }
+
+        if (turn && moveToDirection != null)
+        {
+            LookDirection(moveToDirection);
+        }
+    }
+
+    public void PlayerMove(float x, float z, Vector3? position = null)
     {
         Vector3 direction;
         if (onLadder && !exitLadder)
@@ -49,11 +75,57 @@ public class PlayerMovement : MonoBehaviour
             controller.Move(direction * Time.deltaTime);
         }
 
-        if (direction.x != 0 || direction.z != 0)
+        LookDirection(direction);
+    }
+
+    [YarnCommand("move_player")]
+    public IEnumerator MoveInDirection(string direction, float wait = 0)
+    {
+        if(direction == "left")
         {
-            Quaternion toRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+            moveToDirection = Vector3.left;
+            moveInDirectionBool = true;
+        } 
+        else if (direction == "right")
+        {
+            moveToDirection = Vector3.right;
+            moveInDirectionBool = true;
+        } 
+        else if (direction == "stop") {
+            moveInDirectionBool = false;
         }
+
+        yield return new WaitForSecondsRealtime(wait);
+        if(wait > 0)
+        {
+            moveInDirectionBool = false;
+        }
+    }
+
+    [YarnCommand("turn_player")]
+    public IEnumerator TurnPlayer(string direction)
+    {
+        if(direction == "left")
+        {
+            moveToDirection = Vector3.left;
+        } 
+        else if(direction == "right")
+        {
+            moveToDirection = Vector3.right;
+        }
+        turn = true;
+        yield return new WaitUntil(() => transform.forward == moveToDirection);
+        turn = false;
+    }
+
+    
+    public IEnumerator MoveToPosition(Vector3 position)
+    {
+        moveToDirection = position - transform.position;
+        moveToPosition = position;
+        moveToPositionBool = true;
+        yield return new WaitUntil(() => (position - transform.position).magnitude <= 0.2f);
+        moveToPositionBool = false;
     }
 
     [Header("Ladder movement:")]
@@ -65,7 +137,12 @@ public class PlayerMovement : MonoBehaviour
         transform.position = position;
         activeLadder = currentLadder;
         onLadder = true;
-        Quaternion toRotation = Quaternion.LookRotation(direction);
+        LookDirection(direction);
+    }
+
+    public void LookDirection(Vector3 direction)
+    {
+        Quaternion toRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
         transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
     }
 
@@ -97,6 +174,13 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, transform.position.y, -20f);
         }
+        controller.enabled = true;
+    }
+
+    public void Teleport(Vector3 position)
+    {
+        controller.enabled = false;
+        transform.position = position;
         controller.enabled = true;
     }
 

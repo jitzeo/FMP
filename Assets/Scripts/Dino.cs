@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.PackageManager.Requests;
 using UnityEngine;
+using Yarn.Unity;
 
 public class Dino : MonoBehaviour
 {
@@ -10,7 +10,7 @@ public class Dino : MonoBehaviour
     
     [SerializeField] Vector3 startPos;
     float velocity = 5.7f;
-    private bool freeze;
+    private bool freeze = true;
 
     [SerializeField] GameObject dinoPassive;
 
@@ -56,5 +56,11 @@ public class Dino : MonoBehaviour
         yield return new WaitForSecondsRealtime(2f);
         dinoPassive.SetActive(true);
         gameObject.SetActive(false);
+    }
+
+    [YarnCommand("unfreeze_dino")]
+    public void Unfreeze()
+    {
+        freeze = false;
     }
 }

@@ -1,6 +1,7 @@
 ﻿title: Start
 tags:
 ---
+<<freeze_player Player>>
 Player: Ugh, there's a hugh cliff ahead.
 Player: How am I going to get over this?
 Player: ...
@@ -12,16 +13,22 @@ Player: I won't reach the goal.
 ...: You are no good...
 Player: I am worthless...
 
+<<change_start IslandManager>>
 Player: Wha... What's happening?!
 Player: I am losing vision.
 Player: The cliff! It's starting to move!
 Player: Aaagh, it's coming to get me! I need to find shelter!
+<<freeze_player Player>>
+<<unfreeze_dino DinoActive>>
 ===
 
 title: Discovery
 tags:
 ---
-<<wait 2f>>
+<<freeze_player Player>>
+<<move_player Player left 0.3>>
+<<turn_player Player right>>
+<<wait  1>>
 Player: Puf, puf...
 Player: Deep breathes... Deep breathes... Pfew, okay. 
 Player: I thought I was going to die!
@@ -31,15 +38,17 @@ Player: But why was there a monster all of a sudden?
 Player: It seemed to have dropped something... a stick? What does that mean?
 //?Option?
 Player: There is something about this monster. I need to inspect it further.
+<<move_player Player right 0.4>>
 Player: Aagh, it moved again! 
 Player: ... 
 Player: No, I think I am okay.
 Player: It feels like dirt... Could it have been the storm that brought this monster to life?
 //---
-
+<<change_perspective IslandManager>>
 Player: Woah... The landscape changed!
 Player: Was the monster a creation of the storm?
 Player: At least I can make progress now, let's explore!
+<<freeze_player Player>>
 ===
 
 title: Remarks
@@ -55,6 +64,7 @@ Player: I am making progress!
 title: IdentifyThoughts
 tags:
 ---
+<<freeze_player Player>>
 Player: Where do I go now?
 Player: How do I get to those hills?
 Player: I am stuck again.
@@ -62,6 +72,7 @@ Player: I am stuck again.
 ...: You are failing again...
 Player: Aagh... These thoughts...
 Player: The scenery is changing again!
+<<change_perspective IslandManager>>
 Player: The storm is back.
 Player: The monster still seems to be passed out.
 Player: But what's making this happen?
@@ -72,11 +83,13 @@ Player: How do I know what to believe?
 Player: At least I know how this shift happens. That's a first step to gain control.
 Player: But this shifted landscape allows me to reach new areas.
 Player: Let's explore further.
+<<freeze_player Player>>
 ===
 
 title: Relapse
 tags:
 ---
+<<freeze_player Player>>
 Player: I still don't know how to get to the goal...
 ...: You can't save the village...
 Player: Am I actually not good enough?
@@ -90,6 +103,7 @@ Player: Aagh, what do I do?
 Player: The storm is talking again, I need to gain control!
 Player: The monster coming alive makes the goal reachable!
 Player: Quick, I need to move to its head!
+<<freeze_player Player>>
 ===
 
 title: End

@@ -8,11 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/Perspective21.unity
     guid: a532f14eaab97ec41a500f9b8eb4c494
-  - enabled: 1
-    path: Assets/Scenes/Levels/Perspective1.unity
-    guid: 16608f5f973f8fa47be1981e058b79e4
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 282298df0bcc3bf4382e574a8cec265f,
       type: 2}
+    com.unity.adaptiveperformance.samsung.android.provider_settings: {fileID: 11400000,
+      guid: f0e147a966fa274439adf852028d2f85, type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000,
       guid: 74ebdaf82f721dc40bf4a6c0d3048129, type: 2}
