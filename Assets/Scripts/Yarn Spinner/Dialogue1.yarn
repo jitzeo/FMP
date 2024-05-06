@@ -29,6 +29,7 @@ tags:
 <<move_player Player left 0.3>>
 <<turn_player Player right>>
 <<wait  1>>
+<<activate_dino passive>>
 Player: Puf, puf...
 Player: Deep breathes... Deep breathes... Pfew, okay. 
 Player: I thought I was going to die!
@@ -98,6 +99,9 @@ Player: Is this how far I can go?
 ...: You are a failure...
 Player: I am worthless.
 
+<<change_perspective IslandManager>>
+<<activate_dino end>>
+
 Player: The monster, it.. it's alive again!!
 Player: Aagh, what do I do?
 Player: The storm is talking again, I need to gain control!
@@ -109,6 +113,8 @@ Player: Quick, I need to move to its head!
 title: End
 tags:
 ---
+<<freeze_player Player>>
+<<change_perspective IslandManager>>
 Player: I... I did it!
 Player: I made it!
 Player: My hearts still racing...
@@ -120,4 +126,5 @@ Player: I can save the village.
 Player: I need to further learn about this storm if I will be able to beat it.
 Player: I have still much to learn, but I made it to here already.
 Player: Let's continue the journey
+<<freeze_player Player>>
 ===

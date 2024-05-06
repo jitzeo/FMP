@@ -38,7 +38,7 @@ public class Dino : MonoBehaviour
             ResetAct(other);
         } else
         {
-            StartCoroutine(FallDown());
+            freeze = true;
         }
     }
 
@@ -48,14 +48,6 @@ public class Dino : MonoBehaviour
         player.enabled = false;
         player.transform.position = playerSpawn.position;
         player.enabled = true;
-    }
-
-    private IEnumerator FallDown()
-    {
-        freeze = true;
-        yield return new WaitForSecondsRealtime(2f);
-        dinoPassive.SetActive(true);
-        gameObject.SetActive(false);
     }
 
     [YarnCommand("unfreeze_dino")]
