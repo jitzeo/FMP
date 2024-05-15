@@ -20,6 +20,8 @@ public class PlayerInput : MonoBehaviour
 
     [SerializeField] Camera cam2D;
 
+    [SerializeField] LineView lineView;
+
     [SerializeField] GameObject buttonInstructionsObject;
     [SerializeField] TMP_Text buttonInstructions;
     private string buttonInstructionsText;
@@ -98,6 +100,10 @@ public class PlayerInput : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.Return) && dialogueRunner.IsDialogueRunning)
+        {
+            lineView.OnContinueClicked();
+        }
 
         if (spamButton)
         {
@@ -105,7 +111,7 @@ public class PlayerInput : MonoBehaviour
             {
                 buttonPresses++;
                 buttonInstructions.text = String.Format(buttonInstructionsText, buttonToPress, buttonPressesGoal - buttonPresses, textGoal);
-                playerMovement.PlayerMove(1f, 0f, 50f);
+                playerMovement.PlayerMove(1f, 0f, 20f);
                 pressingButton = true;
             }
 
