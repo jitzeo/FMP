@@ -1,23 +1,33 @@
 ﻿title: Start
 tags:
 ---
+<<declare $available to false>>
+<<declare $anxiety to "none">>
+<<declare $differentPerspective to "none">>
+<<declare $evidence to "none">>
+<<declare $newVision to "none">>
+
 <<freeze_player Player>>
-Player: Ugh, there's a hugh cliff ahead.
+Player: Ugh, there's a huge cliff ahead.
 Player: How am I going to get over this?
 Player: ...
 Player: I don't see a clear path.
-Player: I won't reach the goal.
-...: You can't save the village.
-...: You are failing again...
-...: You are a failure...
-...: You are no good...
+Player: I don't know how to get past this.
+<<input_field "Dialogue System" "What thoughts of you could be your cliff? Which you feel are impossible to get over.">>
+<<set $anxiety to getInputText()>>
+Player: This way I will never reach my goal.
+Mysterious voice: Did you really think <i>you</i> could save the village?
+Mysterious voice: <i>You</i> are failing yet again...
+Mysterious voice: <i>You</i> are a failure...
+Mysterious voice: <i>You</i> are no good...
 Player: I am worthless...
 
 <<change_start IslandManager>>
-Player: Wha... What's happening?!
-Player: I am losing vision.
-Player: The cliff! It's starting to move!
-Player: Aaagh, it's coming to get me! I need to find shelter!
+Player: Wha... What happened?!
+Player: Everything looks different now.
+Player: Aagh, there's a monster!
+Player: It's starting to move!
+Player: It's coming to get me! I need to find shelter!
 <<freeze_player Player>>
 <<unfreeze_dino DinoActive>>
 ===
@@ -30,25 +40,89 @@ tags:
 <<turn_player Player right>>
 <<wait  1>>
 <<activate_dino passive>>
-Player: Puf, puf...
-Player: Deep breathes... Deep breathes... Pfew, okay. 
+Player: Pffff, Hffff...
+Player: Deep breaths... Deep breaths... Phew, okay. 
 Player: I thought I was going to die!
 Player: But what... What was that?
 Player: It seemed to have passed out when hitting this cliff.
 Player: But why was there a monster all of a sudden?
-Player: It seemed to have dropped something... a stick? What does that mean?
-//?Option?
-Player: There is something about this monster. I need to inspect it further.
-<<move_player Player right 0.4>>
+Player: It seemed to have dropped something... 
+<<jump Stick>>
+===
+
+title: Stick
+---
+Player: A stick? What does that mean?
+-> It is probably nothing
+    Player: Maybe it's nothing.
+    Player: A monster with a stick feels odd though.
+    <<jump Stick>>
+-> I can use this to fight the monster!
+    Player: I have a weapon now!
+    Player: But can it really do any damage to the monster?
+    Player: Why did it have a stick in the first place?
+    <<jump Stick>>
+-> What if the monster isn't real?
+    Player: There is something about this monster. I need to inspect it further.
+    Player: Let me find the courage to get closer to it.
+    <<jump Investigate>>
+===
+
+title: Investigate
+---
+<<spam_button Player "right" 10 "inspect the monster.">>
 Player: Aagh, it moved again! 
 Player: ... 
-Player: No, I think I am okay.
-Player: It feels like dirt... Could it have been the storm that brought this monster to life?
+Player: No, I think I am okay. I got this!
+<<spam_button Player "right" 5 "inspect the monster.">>
+Player: It feels like dirt... 
+Player: What could this be?
+Player: What if I look at it from a different perspective?
+<<input_field "Dialogue System" "What about your own thoughts? Do you only look at it from one side? What are you leaving out of consideration?">>
+<<set $differentPerspective to getInputText()>>
+<<spam_button Player "space" 15 "change perspective.">>
 //---
 <<change_perspective IslandManager>>
 Player: Woah... The landscape changed!
-Player: Was the monster a creation of the storm?
-Player: At least I can make progress now, let's explore!
+Player: But where did the monster come from?
+Player: Let's explore this further.
+<<freeze_player Player>>
+===
+
+title: Spikes
+tags:
+---
+<<freeze_player Player>>
+Player: There are spikes here, I can't get past them.
+Player: Where have I seen these sharp spikes before?
+-> Player: Near the cliffside.
+	Player: Were there really any spikes there?
+-> Player: The monster.
+	Player: The monster's teeth indeed looked a lot like them!
+-> Player: Could be a deja-vu.
+	Player: Hmm, could be the case.
+Player: How do I get past these spikes though?
+Player: Maybe a different perspective might help me find a clue.
+<<freeze_player Player>>
+: Press "Q" or "E" to rotate the camera.
+===
+title: Tree
+tags:
+---
+<<freeze_player Player>>
+Player: There is a tree here.
+Player: Could the stick have dropped from here?
+<<freeze_player Player>>
+===
+
+title: Footprint
+tags:
+---
+<<freeze_player Player>>
+Player: Woah!! What a large footprint!
+Player: The monster must have passed by here.
+Player: Aagh, is it still around?!
+Player: I should tread carefully.
 <<freeze_player Player>>
 ===
 
@@ -68,11 +142,13 @@ tags:
 <<freeze_player Player>>
 Player: Where do I go now?
 Player: How do I get to those hills?
-Player: I am stuck again.
-...: You can't save the village...
-...: You are failing again...
-Player: Aagh... These thoughts...
-Player: The scenery is changing again!
+Player: Let's look at the stuff I found.
+Player: The monster felt like dirt...
+Player: I found spikes which I saw on the monster as well...
+Player: There was a tree from which the stick must have dropped...
+Player: But then there was this large footprint as well.
+<<jump Identify1>>
+
 <<change_perspective IslandManager>>
 Player: The storm is back.
 Player: The monster still seems to be passed out.
@@ -87,25 +163,86 @@ Player: Let's explore further.
 <<freeze_player Player>>
 ===
 
-title: Relapse
+title: Identify1
+tags:
+---
+Player: What does this say about the monster?
+-> The monster is still out there.
+    Player: Yeah that could be...
+    Player: But where did it go?
+    Player: I feel like I am missing something.
+    <<jump Identify1>>
+-> The monster was never there.
+    Player: But I saw it with my own eyes.
+    Player: It nearly got me!
+    Player: There must be something else.
+    <<jump Identify1>>
+-> I am currently standing on the monster.
+    Player: Could the monster be these hills from a different perspective?
+    <<change_camera IslandManager>>
+    Player: It is! Something made these hills come to life.
+    <<change_island IslandManager>>
+    <<input_field "Dialogue System" "Are your thoughts true? What evidence do you have for or against the thought?">>
+    <<set $evidence to getInputText()>>
+    Player: But how could these hills move?
+    Player: There is still a lot I don't know.
+    Player: But I can move to new places now in this perspective!
+    <<freeze_player Player>>
+    <<unlock_perspective Player>>
+    <<enable_perspective Player>>
+    : Press "space" to switch between perspectives. 
+===
+
+title: Challenge
 tags:
 ---
 <<freeze_player Player>>
 Player: I still don't know how to get to the goal...
-...: You can't save the village...
-Player: Am I actually not good enough?
-...: You are failing again...
-Player: Is this how far I can go?
-...: You are a failure...
-Player: I am worthless.
+Player: How can I get on top of that cliff?
+Player: The monster seemed about as tall.
+Player: That's it! I might need to use the monster to get there!
+Player: But I don't want to face it again...
+Player: No, I'll have to face it!
+Player: It's just hills and trees.
+Player: But how do I get it alive?
+<<jump Challenge1>>
+===
+
+title: Challenge1
+tags:
+---
+Player: How did it come alive the first time...
+-> When I felt hopeless
+    <<jump Challenge2>>
+-> When I felt confident
+    Player: No that doesn't seem right.
+    <<jump Challenge1>>
+-> When I felt happy
+    Player: No that doesn't seem right.
+    <<jump Challenge1>>
+===
+
+title: Challenge2
+tags:
+---
+Player: That's right! When I didn't know what to do, that mysterious voice appeared.
+Player: I have to go through that feeling again to overcome the monster.
+Player: Otherwise I will never reach my goal.
+Player: I can't do it.
+Mysterious voice: Do <i>you</i> really still think you can save the village?
+Player: Endure it.
+Mysterious voice: <i>You</i> are failing yet again...
+Mysterious voice: <i>You</i> are no good...
+Player: I can handle it.
+Mysterious voice: <i>You</i> are wortheless...
 
 <<change_perspective IslandManager>>
+<<enable_perspective Player>>
 <<activate_dino end>>
 
 Player: The monster, it.. it's alive again!!
-Player: Aagh, what do I do?
-Player: The storm is talking again, I need to gain control!
-Player: The monster coming alive makes the goal reachable!
+Player: Remember, the monster is just the hills!
+Player: Challenge this fear and reach the goal!
 Player: Quick, I need to move to its head!
 <<freeze_player Player>>
 ===
@@ -120,11 +257,14 @@ Player: I made it!
 Player: My hearts still racing...
 Player: But the monster seems to be gone again.
 Player: The anxiety is slowly fading.
-Player: Deep breathes... Deep breathes...
+Player: Deep breaths... Deep breaths...
 Player: Pfew... 
 Player: I can save the village.
-Player: I need to further learn about this storm if I will be able to beat it.
-Player: I have still much to learn, but I made it to here already.
+Player: I need to further learn about this voice if I will be able to control it.
+Player: I still have much to learn, but I already made it to here.
 Player: Let's continue the journey
+<<input_field "Dialogue System" "How strong is the fear on a scale of 0-100 from the thoughts you mentioned at the start now?">>
+<<set $newVision to getInputText()>>
+: Thanks for playing this demo!
 <<freeze_player Player>>
 ===

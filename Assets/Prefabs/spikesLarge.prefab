@@ -109,7 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96736156d9fd3224f974b4871df5f391, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deltaPosition: {x: 0, y: -1, z: 0}
+  deltaPosition: {x: 0, y: -1.5, z: 0}
   isActive: 1
 --- !u!65 &5243213697775631375
 BoxCollider:

@@ -35,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (moveToPositionBool && moveToPosition != null)
         {
-            PlayerMove(moveToDirection.x, moveToDirection.z, moveToPosition);
+            PlayerMove(moveToDirection.x, moveToDirection.z, 5f, moveToPosition);
         }
 
         if (moveInDirectionBool && moveToDirection != null)
@@ -49,8 +49,17 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void PlayerMove(float x, float z, Vector3? position = null)
+    public void PlayerMove(float x, float z, float v = 0f, Vector3? position = null)
     {
+        if(v != 0f)
+        {
+            velocity = v;
+        }
+        else
+        {
+            velocity = 5f;
+        }
+        
         Vector3 direction;
         if (onLadder && !exitLadder)
         {

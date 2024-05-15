@@ -54,8 +54,28 @@ public class IslandManager : MonoBehaviour
     [YarnCommand("change_perspective")]
     public void ChangePerspective()
     {
+        ChangeCamera();
+        ChangeIsland();
+    }
+
+    [YarnCommand("change_start")]
+    public void ChangeStart()
+    {
+        EnableIsland("2D", true);
+        playerMovement.Teleport(startPosDino.position);
+        EnableIsland("start", false);
+    }
+    
+    [YarnCommand("change_camera")]
+    public void ChangeCamera()
+    {
         camMain.enabled = !camMain.enabled;
         cam2D.enabled = !cam2D.enabled;
+    }
+
+    [YarnCommand("change_island")]
+    public void ChangeIsland() 
+    {
         foreach (GameObject island in islands.Values)
         {
             if (island != startIsland)
@@ -65,13 +85,5 @@ public class IslandManager : MonoBehaviour
         }
 
         playerMovement.ChangePerspective();
-    }
-
-    [YarnCommand("change_start")]
-    public void ChangeStart()
-    {
-        EnableIsland("2D", true);
-        playerMovement.Teleport(startPosDino.position);
-        EnableIsland("start", false);
     }
 }

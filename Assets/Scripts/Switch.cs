@@ -8,6 +8,8 @@ public class Switch : MonoBehaviour, IInteractable
     [SerializeField] GameObject[] clientObjects;
     private List<ISwitchable> clients = new List<ISwitchable>();
 
+    [SerializeField] GameObject canvas;
+
     private void Start()
     {
         foreach(GameObject clientObject in clientObjects)
@@ -35,14 +37,16 @@ public class Switch : MonoBehaviour, IInteractable
         if (other.tag == "Player")
         {
             other.GetComponent<PlayerInput>().SetIInstance(this);
+            canvas.SetActive(true);
         }
     }
 
-    private void OnTriggerExit (Collider other)
+    private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Player")
         {
             other.GetComponent<PlayerInput>().ClearIInstance();
+            canvas.SetActive(false);
         }
     }
 }
