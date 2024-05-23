@@ -12,8 +12,7 @@ public class Ladder : MonoBehaviour
 
     private void Start()
     {
-        direction = endPos.position - startPos.position;
-        direction.y = 0;
+        direction = transform.forward;
     }
 
     private void OnTriggerEnter(Collider other)

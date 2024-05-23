@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using TMPro;
+using TMPro.Examples;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
@@ -8,20 +9,25 @@ using Yarn.Unity;
 
 public class PlayerInput : MonoBehaviour
 {
+    [Header("Player movement")]
     [SerializeField] PlayerMovement playerMovement;
     [SerializeField] IslandManager islandManager;
     private float x;
     private float z;
 
+    [Header("Camera Control")]
     [SerializeField] Camera cam;
-    [SerializeField] GameObject center;
+    [SerializeField] Camera cam2D;
+    [SerializeField] CustomCameraController camController;
+    //[SerializeField] GameObject center;
     private float rotateSpeed = 50f;
     private float zoomSpeed = 50f;
 
-    [SerializeField] Camera cam2D;
-
+    [Header("Dialogue Control")]
+    [SerializeField] DialogueRunner dialogueRunner;
     [SerializeField] LineView lineView;
 
+    [Header("Spam Button Interaction")]
     [SerializeField] GameObject buttonInstructionsObject;
     [SerializeField] TMP_Text buttonInstructions;
     private string buttonInstructionsText;
@@ -48,20 +54,21 @@ public class PlayerInput : MonoBehaviour
         z = Input.GetAxisRaw("Vertical");
         if (!freeze)
         {
-            if (x != 0 || z != 0)
+            /*if (x != 0 || z != 0)
             {
                 playerMovement.PlayerMove(x, z);
-            }
+            }*/
+            playerMovement.PlayerMove(x, z);
         
 
             if (Input.GetKey(KeyCode.E))
             {
-                cam.transform.RotateAround(center.transform.position, Vector3.down, rotateSpeed * Time.deltaTime);
+                camController.RotateCamera(-rotateSpeed * Time.deltaTime);
             }
 
             if (Input.GetKey(KeyCode.Q))
             {
-                cam.transform.RotateAround(center.transform.position, Vector3.up, rotateSpeed * Time.deltaTime);
+                camController.RotateCamera(rotateSpeed * Time.deltaTime);
             }
 
             if (Input.GetKeyDown(KeyCode.F))
@@ -81,7 +88,7 @@ public class PlayerInput : MonoBehaviour
                 cam.orthographicSize += zoomSpeed * Time.deltaTime;
             }
 
-            if (unlockedChangedPerspective && changePerspectiveEnabled && Input.GetKeyDown(KeyCode.Space))
+            if (unlockedChangedPerspective && changePerspectiveEnabled && (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift)))
             {
                 if (cam.enabled)
                 {
@@ -199,7 +206,6 @@ public class PlayerInput : MonoBehaviour
         spamButton = false;
     }
 
-    [SerializeField] DialogueRunner dialogueRunner;
     private void DialogueDebug()
     {
         if (Input.GetKeyDown(KeyCode.Alpha2))

@@ -6,23 +6,45 @@ tags:
 <<declare $differentPerspective to "none">>
 <<declare $evidence to "none">>
 <<declare $newVision to "none">>
+<<declare $pressureCount to 0>>
 
 <<freeze_player Player>>
 Player: Ugh, there's a huge cliff ahead.
 Player: How am I going to get over this?
 Player: ...
 Player: I don't see a clear path.
-Player: I don't know how to get past this.
-<<input_field "Dialogue System" "What thoughts of you could be your cliff? Which you feel are impossible to get over.">>
-<<set $anxiety to getInputText()>>
-Player: This way I will never reach my goal.
-Mysterious voice: Did you really think <i>you</i> could save the village?
-Mysterious voice: <i>You</i> are failing yet again...
-Mysterious voice: <i>You</i> are a failure...
-Mysterious voice: <i>You</i> are no good...
-Player: I am worthless...
+Player: Let's explore to see if I can get to the top of this cliff.
+<<freeze_player Player>>
+===
 
+title: Pressure
+tags:
+---
+<<freeze_player Player>>
+<<if $pressureCount == 0>>
+    Mysterious voice: Did you really think <i>you</i> could save the village?
+<<elseif $pressureCount == 1>>
+    Mysterious voice: <i>You</i> are failing yet again...
+<<elseif $pressureCount == 2>>
+    Mysterious voice: <i>You</i> are a failure...
+<<elseif $pressureCount >= 3>>
+    Mysterious voice: <i>You</i> are no good...
+    Player: I am worthless...
+    <<input_field "Dialogue System" "What thoughts of you could be your cliff? Which you feel are impossible to get over.">>
+    <<set $anxiety to getInputText()>>
+    <<jump Transition>>
+<<endif>>
+<<set $pressureCount = $pressureCount + 1>>
+<<freeze_player Player>>
+===
+
+title: Transition
+tags: 
+---
+<<fade FadeInLeft>>
 <<change_start IslandManager>>
+<<rotate_player Player>>
+<<fade FadeOutLeft>>
 Player: Wha... What happened?!
 Player: Everything looks different now.
 Player: Aagh, there's a monster!
@@ -80,9 +102,11 @@ Player: What could this be?
 Player: What if I look at it from a different perspective?
 <<input_field "Dialogue System" "What about your own thoughts? Do you only look at it from one side? What are you leaving out of consideration?">>
 <<set $differentPerspective to getInputText()>>
-<<spam_button Player "space" 15 "change perspective.">>
-//---
-<<change_perspective IslandManager>>
+<<tug_interaction "2D Island" true>>
+===
+
+title: Investigate2
+---
 Player: Woah... The landscape changed!
 Player: But where did the monster come from?
 Player: Let's explore this further.
@@ -190,7 +214,7 @@ Player: What does this say about the monster?
     <<freeze_player Player>>
     <<unlock_perspective Player>>
     <<enable_perspective Player>>
-    : Press "space" to switch between perspectives. 
+    : Press "shift" to switch between perspectives. 
 ===
 
 title: Challenge
@@ -230,11 +254,11 @@ Player: I have to go through that feeling again to overcome the monster.
 Player: Otherwise I will never reach my goal.
 Player: I can't do it.
 Mysterious voice: Do <i>you</i> really still think you can save the village?
-Player: Endure it.
+Player: No, I have come this far.
 Mysterious voice: <i>You</i> are failing yet again...
 Mysterious voice: <i>You</i> are no good...
-Player: I can handle it.
-Mysterious voice: <i>You</i> are wortheless...
+Player: I can at least try.
+Mysterious voice: <i>You</i> are worthless...
 
 <<change_perspective IslandManager>>
 <<enable_perspective Player>>
@@ -245,11 +269,56 @@ Player: Remember, the monster is just the hills!
 Player: Challenge this fear and reach the goal!
 Player: Quick, I need to move to its head!
 <<freeze_player Player>>
+<<activate_stamina Player true>>
+===
+
+title: Facing2
+tags:
+---
+Player: This is tougher than I thought...
+Player: I need a breather.
+Player: I still have to go a long way...
+Player: But I have already made it to here.
+Player: Let's take it in steps. I will try to reach the back next.
+===
+
+title: Facing
+tags:
+---
+<<freeze_player Player>>
+Player: HFFF... PFFF...
+Player: HFFF... My heart is racing.
+Player: PFFF... I am losing control.
+Player: HFFF... I need to regain my breath.
+Player: PFFF... Gain back control.
+<<breathing_minigame true>>
+===
+
+title: Facing1
+tags:
+---
+Player: Hfff... Pfff...
+Player: That's... That's better.
+Player: Alright, I think I can go on again.
+Player: Let's get to the head.
+<<freeze_player Player>>
+===
+
+title: Facing3
+tags:
+---
+Player: I am near my limit.
+Player: I just want to give up.
+Player: What am I even doing this for?
+Player: No, I can't give in now. I am almost there.
+Player: Look at how far I already made it.
+Player: I can make this last step.
 ===
 
 title: End
 tags:
 ---
+<<activate_stamina Player false>>
 <<freeze_player Player>>
 <<change_perspective IslandManager>>
 Player: I... I did it!

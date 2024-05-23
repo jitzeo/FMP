@@ -6,8 +6,6 @@ using Yarn.Unity;
 
 public class Dino : MonoBehaviour
 {
-    [SerializeField] IslandManager islandManager;
-    
     [SerializeField] Vector3 startPos;
     float velocity = 5.7f;
     private bool freeze = true;
@@ -36,7 +34,7 @@ public class Dino : MonoBehaviour
         if(other.tag == "Player")
         {
             ResetAct(other);
-        } else
+        } else if (other.name == "StopDino")
         {
             freeze = true;
         }
