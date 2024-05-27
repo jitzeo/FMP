@@ -118,7 +118,7 @@ public class PlayerInput : MonoBehaviour
             {
                 buttonPresses++;
                 buttonInstructions.text = String.Format(buttonInstructionsText, buttonToPress, buttonPressesGoal - buttonPresses, textGoal);
-                playerMovement.PlayerMove(1f, 0f, 20f);
+                playerMovement.PlayerMove(1f, 0f, 30f);
                 pressingButton = true;
             }
 

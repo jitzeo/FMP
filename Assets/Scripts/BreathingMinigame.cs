@@ -1,11 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using UnityEditor.XR;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Yarn.Unity;
 
@@ -28,9 +22,9 @@ public class BreathingMinigame : MonoBehaviour
 
     private float minSize = 200f;
     private float maxSize = 500f;
-    private float breathInTime = 3f;
+    private float breathInTime = 5f;
     private float sizeIncreasePerSecond;
-    private float breathOutTime = 4f;
+    private float breathOutTime = 5f;
     private float sizeDecreasePerSecond;
 
     private float breathCycles;

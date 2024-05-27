@@ -15,10 +15,11 @@ public class Stamina : MonoBehaviour
 
     private float staminaMax = 10;
     private float staminaAmount = 10;
-    private float staminaDecreasePerSecond = 11;
+    private float staminaDecreasePerSecond = 8;
     private float staminaIncreasePerSecond = 10;
 
-    private float decreaseSpeedFactor = 0.05f;
+    private float normalSpeedFactor = 0.9f;
+    private float decreaseSpeedFactor = 0.1f;
 
     private bool staminaDepleted;
 
@@ -44,12 +45,12 @@ public class Stamina : MonoBehaviour
         if(staminaAmount > 0 && !staminaDepleted && (x != 0 || z != 0))
         {
             DecreaseStamina();
-            return 1f;
+            return normalSpeedFactor;
         } 
         else if (x == 0 && z == 0 && staminaAmount > 0 && staminaAmount < staminaMax && !staminaDepleted)
         {
             IncreaseStamina();
-            return 1f;
+            return normalSpeedFactor;
         }
         else if (!staminaDepleted && staminaAmount <= 0)
         {
@@ -64,7 +65,7 @@ public class Stamina : MonoBehaviour
         }
         else
         {
-            return 1f;
+            return normalSpeedFactor;
         }
         
     }

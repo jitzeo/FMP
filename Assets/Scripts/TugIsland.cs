@@ -30,6 +30,8 @@ public class TugIsland : MonoBehaviour
     private float currentRotation;
     private int tugCount;
 
+    private float minimalTug = 20f;
+
     [SerializeField] float turnTime = 0.5f;
     [SerializeField] float tugFactor = 0.05f;
     float t = 0f;
@@ -77,7 +79,7 @@ public class TugIsland : MonoBehaviour
             tugAvailable = false;
             StartCoroutine(RotateIslandAfterRelease());
 
-            if (mouseDelta > 30)
+            if (mouseDelta > minimalTug)
             {
                 tugCount++;
                 tagInstructionsText.text = string.Format("Tug the island to the right {0} times to change the perspective.", 3 - tugCount);

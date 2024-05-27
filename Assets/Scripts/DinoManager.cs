@@ -9,6 +9,8 @@ public class DinoManager : MonoBehaviour
     [SerializeField] GameObject dinoPassive;
     [SerializeField] GameObject dinoEnd;
 
+    [SerializeField] Animation anim;
+
     private static Dictionary<string, GameObject> dinos = new Dictionary<string, GameObject>();
 
     private void Start()

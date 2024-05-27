@@ -14,7 +14,6 @@ public class Fade : MonoBehaviour
         dialogueRunner.AddCommandHandler<string>("fade", FadeTransition);
         
         anim = GetComponent<Animation>();
-        StartCoroutine(FadeTransition("FadeOutLeft"));
     }
 
     public IEnumerator FadeTransition(string fadeClip)

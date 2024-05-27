@@ -3,17 +3,33 @@ tags:
 ---
 <<declare $available to false>>
 <<declare $anxiety to "none">>
+<<declare $fearLevelStart to 0>>
 <<declare $differentPerspective to "none">>
 <<declare $evidence to "none">>
-<<declare $newVision to "none">>
+<<declare $fearLevelEnd to "none">>
 <<declare $pressureCount to 0>>
+<<declare $selectedOption1 to false>>
+<<declare $selectedOption2 to false>>
 
+<<freeze_player Player>>
+: In this game you are playing as a person whose village has been tormented by a terrible storm. To stop the ongoing rampage, you have set out on an adventure through the mountainous valley to find the core of the storm to figure out what causes the storm and to drive the it away. 
+: Determined you set out on this journey but you remain anxious as you are insecure about your ability to save the village. Along the path you encounter obstacles in the rugged terrain which are analoguous of your anxiety standing in your way.
+<<fade FadeOutLeft>>
+Player: Okay, where do I need to go now.
+Player: Ah I see the flag over there! There's the next waypoint!
+Player: Now how do I get there? Let's look for a path.
+<<freeze_player Player>>
+===
+
+title: Obstacle
+tags:
+---
 <<freeze_player Player>>
 Player: Ugh, there's a huge cliff ahead.
 Player: How am I going to get over this?
 Player: ...
 Player: I don't see a clear path.
-Player: Let's explore to see if I can get to the top of this cliff.
+Player: Let's explore to see if there is a path that leads to the top of this cliff.
 <<freeze_player Player>>
 ===
 
@@ -22,15 +38,21 @@ tags:
 ---
 <<freeze_player Player>>
 <<if $pressureCount == 0>>
+    Player: Nope, not through here.
     Mysterious voice: Did you really think <i>you</i> could save the village?
 <<elseif $pressureCount == 1>>
-    Mysterious voice: <i>You</i> are failing yet again...
+    Player: Ugh, this also is a dead end.
+    Mysterious voice: You are failing yet again...
 <<elseif $pressureCount == 2>>
-    Mysterious voice: <i>You</i> are a failure...
+    Player: This cliff just keeps lurking over me.
+    Mysterious voice: You are a failure...
 <<elseif $pressureCount >= 3>>
-    Mysterious voice: <i>You</i> are no good...
+    Player: This cliff feels more and more daunting...
+    Mysterious voice: You are no good...
     Player: I am worthless...
     <<input_field "Dialogue System" "What thoughts of you could be your cliff? Which you feel are impossible to get over.">>
+    <<set $anxiety to getInputText()>>
+    <<input_field "Dialogue System" "How strong is the fear with this thought on a scale of 0-100?">>
     <<set $anxiety to getInputText()>>
     <<jump Transition>>
 <<endif>>
@@ -52,6 +74,7 @@ Player: It's starting to move!
 Player: It's coming to get me! I need to find shelter!
 <<freeze_player Player>>
 <<unfreeze_dino DinoActive>>
+<<instructions "Press [<-] or [A] to run away from the monster!" "left">>
 ===
 
 title: Discovery
@@ -75,18 +98,22 @@ Player: It seemed to have dropped something...
 title: Stick
 ---
 Player: A stick? What does that mean?
--> It is probably nothing
+-> It is probably nothing <<if $selectedOption1 == false>>
     Player: Maybe it's nothing.
     Player: A monster with a stick feels odd though.
+    <<set $selectedOption1 = true>>
     <<jump Stick>>
--> I can use this to fight the monster!
+-> I can use this to fight the monster! <<if $selectedOption2 == false>>
     Player: I have a weapon now!
     Player: But can it really do any damage to the monster?
     Player: Why did it have a stick in the first place?
+    <<set $selectedOption2 = true>>
     <<jump Stick>>
 -> What if the monster isn't real?
     Player: There is something about this monster. I need to inspect it further.
     Player: Let me find the courage to get closer to it.
+    <<set $selectedOption1 = false>>
+    <<set $selectedOption2 = false>>
     <<jump Investigate>>
 ===
 
@@ -99,7 +126,7 @@ Player: No, I think I am okay. I got this!
 <<spam_button Player "right" 5 "inspect the monster.">>
 Player: It feels like dirt... 
 Player: What could this be?
-Player: What if I look at it from a different perspective?
+Player: What if I try to look at it from a different perspective?
 <<input_field "Dialogue System" "What about your own thoughts? Do you only look at it from one side? What are you leaving out of consideration?">>
 <<set $differentPerspective to getInputText()>>
 <<tug_interaction "2D Island" true>>
@@ -119,17 +146,18 @@ tags:
 <<freeze_player Player>>
 Player: There are spikes here, I can't get past them.
 Player: Where have I seen these sharp spikes before?
--> Player: Near the cliffside.
-	Player: Were there really any spikes there?
--> Player: The monster.
-	Player: The monster's teeth indeed looked a lot like them!
--> Player: Could be a deja-vu.
-	Player: Hmm, could be the case.
+// -> Player: Near the cliffside.
+// 	Player: Were there really any spikes there?
+// -> Player: The monster.
+Player: The monster's teeth looked a lot like them!
+// -> Player: Could be a deja-vu.
+// 	Player: Hmm, could be the case.
 Player: How do I get past these spikes though?
 Player: Maybe a different perspective might help me find a clue.
 <<freeze_player Player>>
-: Press "Q" or "E" to rotate the camera.
+<<instructions "Press [Q] or [E] to rotate the camera." "rotate">>
 ===
+
 title: Tree
 tags:
 ---
@@ -174,6 +202,7 @@ Player: But then there was this large footprint as well.
 <<jump Identify1>>
 
 <<change_perspective IslandManager>>
+//This text is currently not shown to the player
 Player: The storm is back.
 Player: The monster still seems to be passed out.
 Player: But what's making this happen?
@@ -191,22 +220,26 @@ title: Identify1
 tags:
 ---
 Player: What does this say about the monster?
--> The monster is still out there.
+-> The monster is still out there. <<if $selectedOption1 == false>>
     Player: Yeah that could be...
     Player: But where did it go?
     Player: I feel like I am missing something.
+    <<set $selectedOption1 = true>>
     <<jump Identify1>>
--> The monster was never there.
+-> The monster was never there. <<if $selectedOption2 == false>>
     Player: But I saw it with my own eyes.
     Player: It nearly got me!
     Player: There must be something else.
+    <<set $selectedOption2 = true>>
     <<jump Identify1>>
 -> I am currently standing on the monster.
     Player: Could the monster be these hills from a different perspective?
+    <<set $selectedOption1 = false>>
+    <<set $selectedOption2 = false>>
     <<change_camera IslandManager>>
     Player: It is! Something made these hills come to life.
     <<change_island IslandManager>>
-    <<input_field "Dialogue System" "Are your thoughts true? What evidence do you have for or against the thought?">>
+    <<input_field "Dialogue System" "Are your thoughts true? Are there other explanations that you have not yet thought about?">>
     <<set $evidence to getInputText()>>
     Player: But how could these hills move?
     Player: There is still a lot I don't know.
@@ -214,7 +247,7 @@ Player: What does this say about the monster?
     <<freeze_player Player>>
     <<unlock_perspective Player>>
     <<enable_perspective Player>>
-    : Press "shift" to switch between perspectives. 
+    <<instructions "Press [shift] to switch between perspectives." "shift">>
 ===
 
 title: Challenge
@@ -249,7 +282,8 @@ Player: How did it come alive the first time...
 title: Challenge2
 tags:
 ---
-Player: That's right! When I didn't know what to do, that mysterious voice appeared.
+Player: That's right! When I felt hopeless, that mysterious voice appeared.
+Player: My thoughts made the monster come alive!
 Player: I have to go through that feeling again to overcome the monster.
 Player: Otherwise I will never reach my goal.
 Player: I can't do it.
@@ -324,16 +358,17 @@ tags:
 Player: I... I did it!
 Player: I made it!
 Player: My hearts still racing...
-Player: But the monster seems to be gone again.
+Player: But I challenged the monster!
 Player: The anxiety is slowly fading.
 Player: Deep breaths... Deep breaths...
 Player: Pfew... 
-Player: I can save the village.
+Player: Just running from my fears won't help me in the long run.
 Player: I need to further learn about this voice if I will be able to control it.
+Player: This skill of taking a different perspective will be useful.
 Player: I still have much to learn, but I already made it to here.
 Player: Let's continue the journey
-<<input_field "Dialogue System" "How strong is the fear on a scale of 0-100 from the thoughts you mentioned at the start now?">>
-<<set $newVision to getInputText()>>
+<<input_field "Dialogue System" "How strong is the fear with the thoughts mentioned at the start now on a scale of 0-100?">>
+<<set $fearLevelEnd to getInputText()>>
 : Thanks for playing this demo!
 <<freeze_player Player>>
 ===
