@@ -15,10 +15,10 @@ public class Stamina : MonoBehaviour
 
     private float staminaMax = 10;
     private float staminaAmount = 10;
-    private float staminaDecreasePerSecond = 8;
+    private float staminaDecreasePerSecond = 10;
     private float staminaIncreasePerSecond = 10;
 
-    private float normalSpeedFactor = 0.9f;
+    private float normalSpeedFactor = 0.8f;
     private float decreaseSpeedFactor = 0.1f;
 
     private bool staminaDepleted;

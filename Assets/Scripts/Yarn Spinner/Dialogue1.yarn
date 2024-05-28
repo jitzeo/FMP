@@ -193,7 +193,7 @@ tags:
 ---
 <<freeze_player Player>>
 Player: Where do I go now?
-Player: How do I get to those hills?
+Player: How do I get to the flag?
 Player: Let's look at the stuff I found.
 Player: The monster felt like dirt...
 Player: I found spikes which I saw on the monster as well...
@@ -254,7 +254,7 @@ title: Challenge
 tags:
 ---
 <<freeze_player Player>>
-Player: I still don't know how to get to the goal...
+Player: I still don't know how to get to the flag...
 Player: How can I get on top of that cliff?
 Player: The monster seemed about as tall.
 Player: That's it! I might need to use the monster to get there!
