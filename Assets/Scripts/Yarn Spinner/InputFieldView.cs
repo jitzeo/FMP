@@ -18,6 +18,8 @@ public class InputFieldView : MonoBehaviour
 
     public bool inputComplete;
 
+    [SerializeField] InterventionOverview overview;
+
     public void OnInputSubmit()
     {
         Debug.Log("Submit input");
@@ -25,6 +27,7 @@ public class InputFieldView : MonoBehaviour
         {
             inputComplete = true;
             inputText = input.text;
+            overview.AddAnswer(inputText);
         }       
     }
 

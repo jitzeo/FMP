@@ -3,7 +3,7 @@ tags:
 ---
 <<declare $available to false>>
 <<declare $anxiety to "none">>
-<<declare $fearLevelStart to 0>>
+<<declare $fearLevelStart to "none">>
 <<declare $differentPerspective to "none">>
 <<declare $evidence to "none">>
 <<declare $fearLevelEnd to "none">>
@@ -53,7 +53,7 @@ tags:
     <<input_field "Dialogue System" "What thoughts of you could be your cliff? Which you feel are impossible to get over.">>
     <<set $anxiety to getInputText()>>
     <<input_field "Dialogue System" "How strong is the fear with this thought on a scale of 0-100?">>
-    <<set $anxiety to getInputText()>>
+    <<set $fearLevelStart to getInputText()>>
     <<jump Transition>>
 <<endif>>
 <<set $pressureCount = $pressureCount + 1>>
@@ -248,6 +248,7 @@ Player: What does this say about the monster?
     <<unlock_perspective Player>>
     <<enable_perspective Player>>
     <<instructions "Press [shift] to switch between perspectives." "shift">>
+    <<set_guide 1>>
 ===
 
 title: Challenge
@@ -370,5 +371,6 @@ Player: Let's continue the journey
 <<input_field "Dialogue System" "How strong is the fear with the thoughts mentioned at the start now on a scale of 0-100?">>
 <<set $fearLevelEnd to getInputText()>>
 : Thanks for playing this demo!
+<<show_overview>>
 <<freeze_player Player>>
 ===
