@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Yarn.Unity;
 
 public class Switch : MonoBehaviour, IInteractable
 {
@@ -9,6 +10,7 @@ public class Switch : MonoBehaviour, IInteractable
     private List<ISwitchable> clients = new List<ISwitchable>();
 
     [SerializeField] GameObject canvas;
+    [SerializeField] DialogueRunner dialogueRunner;
 
     private void Start()
     {
@@ -30,6 +32,8 @@ public class Switch : MonoBehaviour, IInteractable
                 client.Activate();
             }
         }
+
+        dialogueRunner.StartDialogue("Remarks");
     }
 
     private void OnTriggerEnter(Collider other)

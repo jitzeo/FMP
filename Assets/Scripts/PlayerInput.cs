@@ -32,9 +32,10 @@ public class PlayerInput : MonoBehaviour
     [SerializeField] TMP_Text buttonInstructions;
     private string buttonInstructionsText;
 
+    [Header("Player control features")]
+    [SerializeField] bool unlockedChangedPerspective;
+    [SerializeField] bool changePerspectiveEnabled;
     private bool freeze;
-    private bool unlockedChangedPerspective;
-    private bool changePerspectiveEnabled;
 
     private IInteractable interactableInstance;
 
@@ -94,8 +95,10 @@ public class PlayerInput : MonoBehaviour
                 {
                     Ray ray = new Ray(transform.position + Vector3.back * 0.55f, Vector3.back);
                     RaycastHit hit;
+                    Ray ray2 = new Ray(transform.position + Vector3.forward * 0.55f, Vector3.forward);
+                    RaycastHit hit2;
 
-                    if (!Physics.Raycast(ray, out hit, 60f))
+                    if (!Physics.Raycast(ray, out hit, 60f) && !Physics.Raycast(ray2, out hit2, 60f))
                     {
                         islandManager.ChangePerspective();
                     }
@@ -118,7 +121,7 @@ public class PlayerInput : MonoBehaviour
             {
                 buttonPresses++;
                 buttonInstructions.text = String.Format(buttonInstructionsText, buttonToPress, buttonPressesGoal - buttonPresses, textGoal);
-                playerMovement.PlayerMove(1f, 0f, 12f); //Time.deltaTime on WebGL is a factor 10 smaller then in the editor.
+                playerMovement.PlayerMove(1f, 0f, 9f); //Time.deltaTime on WebGL is a factor 10 smaller then in the editor.
                 pressingButton = true;
             }
 
@@ -133,8 +136,6 @@ public class PlayerInput : MonoBehaviour
         {
             pressingButton = false;
         }
-
-        DialogueDebug();
 
         // Mobile control
         /*if(Input.touchCount > 0)
@@ -204,25 +205,5 @@ public class PlayerInput : MonoBehaviour
         yield return new WaitUntil(() => buttonPresses >= buttonPressGoal);
         buttonInstructionsObject.SetActive(false);
         spamButton = false;
-    }
-
-    private void DialogueDebug()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            dialogueRunner.StartDialogue("IdentifyThoughts");
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            dialogueRunner.StartDialogue("Relapse");
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            dialogueRunner.StartDialogue("End");
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            dialogueRunner.StartDialogue("Start");
-        }
     }
 }

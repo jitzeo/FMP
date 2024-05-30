@@ -20,9 +20,10 @@ public class TugIsland : MonoBehaviour
 
     [SerializeField] GameObject tagInstructions;
     [SerializeField] TMP_Text tagInstructionsText;
-    private string instructionString = "Click and throw the island to the right {0} times to change perspective.";
+    private string instructionString = "Click and quickly drag the island to the right {0} times to change perspective.";
 
     private float mousePos;
+    private float mouseDelta;
     private bool tugAvailable = true;
     private bool tugActive = false;
     private bool rotateIsland;
@@ -53,19 +54,19 @@ public class TugIsland : MonoBehaviour
         }
         else if (tugCount >= 3 && tugActive)
         {
-            transform.RotateAround(rotateAxis.position, Vector3.up, Mathf.Lerp(rotationDelta, -10f, t));
-            player.RotateAround(rotateAxis.position, Vector3.up, Mathf.Lerp(rotationDelta, -10f, t));
+            transform.RotateAround(rotateAxis.position, Vector3.up, Mathf.Lerp(rotationDelta, -15f, t));
+            player.RotateAround(rotateAxis.position, Vector3.up, Mathf.Lerp(rotationDelta, -15f, t));
             t += 0.5f * Time.deltaTime;
         }
     }
 
     private void TugInteraction()
     {
-        float mouseDelta = Input.mousePosition.x - mousePos;
         currentRotation = transform.rotation.eulerAngles.y;
 
         if (Input.GetMouseButton(0) && tugAvailable)
         {
+            mouseDelta = Input.mousePosition.x - mousePos;
             rotationDelta = -mouseDelta * tugFactor;
 
             if (currentRotation < 50 || currentRotation > 290 || (currentRotation < 75 && rotationDelta < 0) || (currentRotation > 265 && rotationDelta > 0))
@@ -75,17 +76,15 @@ public class TugIsland : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonUp(0) && tugAvailable)
+        if (mouseDelta > minimalTug && tugAvailable)
         {
             //Rotate the island a bit before turning back
             tugAvailable = false;
+            mouseDelta = 0;
             StartCoroutine(RotateIslandAfterRelease());
 
-            if (mouseDelta > minimalTug)
-            {
-                tugCount++;
-                tagInstructionsText.text = string.Format(instructionString, 3 - tugCount);
-            }
+            tugCount++;
+            tagInstructionsText.text = string.Format(instructionString, 3 - tugCount);
 
             if (tugCount >= 3)
             {

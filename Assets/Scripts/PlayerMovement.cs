@@ -155,9 +155,9 @@ public class PlayerMovement : MonoBehaviour
     public bool exitLadder;
     private Ladder activeLadder;
     
-    public void OnLadder(Vector3 position, Ladder currentLadder, Vector3 direction)
+    public void OnLadder(Vector3 startPos, Ladder currentLadder, Vector3 direction)
     {
-        transform.position = position;
+        Teleport(startPos);
         activeLadder = currentLadder;
         onLadder = true;
         RotatePlayer(direction);
@@ -169,13 +169,11 @@ public class PlayerMovement : MonoBehaviour
         transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
     }
 
-    public void LadderExit()
+    public void LadderExit(Vector3 endPos)
     {
-        controller.enabled = false;
-        transform.position = activeLadder.endPos.position;
+        Teleport(endPos);
         onLadder = false;
         exitLadder = false;
-        controller.enabled = true;
     }
 
     public void ChangePerspective()

@@ -10,11 +10,16 @@ public class GuidingParticles : MonoBehaviour
 
     private ParticleSystem activeParticleSystem;
     private int activeParticleIndex;
+
     void Start()
     {
+        dialogueRunner.AddCommandHandler<int>("set_guide", SetActiveGuidingParticles);
+    }
+    void OnEnable()
+    {
+        Debug.Log("play particles: " + activeParticleIndex);
         activeParticleSystem = particles[activeParticleIndex];
         activeParticleSystem.Play();
-        dialogueRunner.AddCommandHandler<int>("set_guide", SetActiveGuidingParticles);
     }
 
     public void SetActiveGuidingParticles(int particleIndex)

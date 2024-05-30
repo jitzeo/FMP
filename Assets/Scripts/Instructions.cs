@@ -30,7 +30,7 @@ public class Instructions : MonoBehaviour
         {
             foreach (string key in instructionKeys)
             {
-                if (Input.GetKeyDown(key))
+                if (Input.GetKey(key))
                 {
                     instructionKeyPressed = true;
                 }

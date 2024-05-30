@@ -23,12 +23,17 @@ public class InputFieldView : MonoBehaviour
     public void OnInputSubmit()
     {
         Debug.Log("Submit input");
-        if(Input.GetButton("Submit") && input.text != "")
+        if(Input.GetButton("Submit") && input.text.Trim() != "")
         {
             inputComplete = true;
             inputText = input.text;
             overview.AddAnswer(inputText);
-        }       
+        } 
+        else if(input.text.Trim() == "")
+        {
+            //Remove enter if they submitted an empty string
+            input.text = "";
+        }     
     }
 
     [YarnCommand("input_field")]
