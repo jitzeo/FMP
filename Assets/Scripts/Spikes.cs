@@ -6,7 +6,7 @@ public class Spikes : MonoBehaviour, ISwitchable
 {
     [SerializeField] Vector3 deltaPosition;
     private Vector3 startPosition;
-    private float moveSpeed = 5f;
+    private float moveSpeed = 3f;
 
     private Collider col;
 

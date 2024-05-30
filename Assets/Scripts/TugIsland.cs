@@ -20,6 +20,7 @@ public class TugIsland : MonoBehaviour
 
     [SerializeField] GameObject tagInstructions;
     [SerializeField] TMP_Text tagInstructionsText;
+    private string instructionString = "Click and throw the island to the right {0} times to change perspective.";
 
     private float mousePos;
     private bool tugAvailable = true;
@@ -40,6 +41,7 @@ public class TugIsland : MonoBehaviour
     void Start()
     {
         mousePos = Input.mousePosition.x;
+        tagInstructionsText.text = string.Format(instructionString, 3);
     }
 
     // Update is called once per frame
@@ -51,8 +53,8 @@ public class TugIsland : MonoBehaviour
         }
         else if (tugCount >= 3 && tugActive)
         {
-            transform.RotateAround(rotateAxis.position, Vector3.up, Mathf.Lerp(rotationDelta, -5f, t));
-            player.RotateAround(rotateAxis.position, Vector3.up, Mathf.Lerp(rotationDelta, -5f, t));
+            transform.RotateAround(rotateAxis.position, Vector3.up, Mathf.Lerp(rotationDelta, -10f, t));
+            player.RotateAround(rotateAxis.position, Vector3.up, Mathf.Lerp(rotationDelta, -10f, t));
             t += 0.5f * Time.deltaTime;
         }
     }
@@ -82,7 +84,7 @@ public class TugIsland : MonoBehaviour
             if (mouseDelta > minimalTug)
             {
                 tugCount++;
-                tagInstructionsText.text = string.Format("Tug the island to the right {0} times to change the perspective.", 3 - tugCount);
+                tagInstructionsText.text = string.Format(instructionString, 3 - tugCount);
             }
 
             if (tugCount >= 3)

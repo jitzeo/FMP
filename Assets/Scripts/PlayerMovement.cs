@@ -91,6 +91,7 @@ public class PlayerMovement : MonoBehaviour
         if (controller.enabled)
         {
             controller.Move(direction * Time.deltaTime);
+            //Debug.Log("Movement vector: " + direction * Time.deltaTime + " direction: " +direction + "deltaTime: " + Time.deltaTime);
         }
 
         if (direction != Vector3.zero && !onLadder)

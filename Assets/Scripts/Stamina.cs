@@ -19,9 +19,10 @@ public class Stamina : MonoBehaviour
     private float staminaIncreasePerSecond = 10;
 
     private float normalSpeedFactor = 0.8f;
-    private float decreaseSpeedFactor = 0.1f;
+    private float decreaseSpeedFactor = 0.15f;
 
     private bool staminaDepleted;
+    private bool animInterupted;
 
     [YarnCommand("activate_stamina")]
     public void ActivateStamina(bool activate)
@@ -37,7 +38,7 @@ public class Stamina : MonoBehaviour
             staminaBar.value = staminaAmount/staminaMax;
         }
 
-        staminaCanvas.transform.rotation = cam.transform.rotation;
+        staminaCanvas.transform.rotation = cam.transform.rotation; 
     }
 
     public float UpdateStamina(float x, float z)
@@ -84,7 +85,22 @@ public class Stamina : MonoBehaviour
     {
         refillStamina.Play();
         yield return new WaitUntil(() => !refillStamina.isPlaying);
-        staminaAmount = staminaMax;
+        if (!animInterupted)
+        {
+            staminaAmount = staminaMax;
+        }
         staminaDepleted = false;
+    }
+
+    [YarnCommand("deplete_stamina")]
+    public void DepleteStamina()
+    {
+        if (refillStamina.isPlaying)
+        {
+            animInterupted = true;
+            refillStamina.Stop();
+        }
+
+        staminaAmount = 1;
     }
 }

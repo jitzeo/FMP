@@ -23,7 +23,7 @@ public class InputFieldView : MonoBehaviour
     public void OnInputSubmit()
     {
         Debug.Log("Submit input");
-        if(Input.GetButton("Submit"))
+        if(Input.GetButton("Submit") && input.text != "")
         {
             inputComplete = true;
             inputText = input.text;

@@ -118,7 +118,7 @@ public class PlayerInput : MonoBehaviour
             {
                 buttonPresses++;
                 buttonInstructions.text = String.Format(buttonInstructionsText, buttonToPress, buttonPressesGoal - buttonPresses, textGoal);
-                playerMovement.PlayerMove(1f, 0f, 30f);
+                playerMovement.PlayerMove(1f, 0f, 12f); //Time.deltaTime on WebGL is a factor 10 smaller then in the editor.
                 pressingButton = true;
             }
 

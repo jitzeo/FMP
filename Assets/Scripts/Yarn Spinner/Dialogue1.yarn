@@ -13,7 +13,7 @@ tags:
 
 <<freeze_player Player>>
 : In this game you are playing as a person whose village has been tormented by a terrible storm. To stop the ongoing rampage, you have set out on an adventure through the mountainous valley to find the core of the storm to figure out what causes the storm and to drive the it away. 
-: Determined you set out on this journey but you remain anxious as you are insecure about your ability to save the village. Along the path you encounter obstacles in the rugged terrain which are analoguous of your anxiety standing in your way.
+: Determined you set out on this journey but you remain anxious as you are insecure about your ability to save the village. Along the path you encounter obstacles in the rugged terrain which are analogous of your anxiety standing in your way.
 <<fade FadeOutLeft>>
 Player: Okay, where do I need to go now.
 Player: Ah I see the flag over there! There's the next waypoint!
@@ -52,7 +52,7 @@ tags:
     Player: I am worthless...
     <<input_field "Dialogue System" "What thoughts of you could be your cliff? Which you feel are impossible to get over.">>
     <<set $anxiety to getInputText()>>
-    <<input_field "Dialogue System" "How strong is the fear with this thought on a scale of 0-100?">>
+    <<input_field "Dialogue System" "How strong is the fear associated with this thought on a scale of 0-100?">>
     <<set $fearLevelStart to getInputText()>>
     <<jump Transition>>
 <<endif>>
@@ -138,6 +138,7 @@ Player: Woah... The landscape changed!
 Player: But where did the monster come from?
 Player: Let's explore this further.
 <<freeze_player Player>>
+<<set_guide 0>>
 ===
 
 title: Spikes
@@ -321,6 +322,7 @@ title: Facing
 tags:
 ---
 <<freeze_player Player>>
+<<deplete_stamina Player>>
 Player: HFFF... PFFF...
 Player: HFFF... My heart is racing.
 Player: PFFF... I am losing control.
@@ -335,7 +337,7 @@ tags:
 Player: Hfff... Pfff...
 Player: That's... That's better.
 Player: Alright, I think I can go on again.
-Player: Let's get to the head.
+Player: Let's get to the flag.
 <<freeze_player Player>>
 ===
 
@@ -368,9 +370,17 @@ Player: I need to further learn about this voice if I will be able to control it
 Player: This skill of taking a different perspective will be useful.
 Player: I still have much to learn, but I already made it to here.
 Player: Let's continue the journey
-<<input_field "Dialogue System" "How strong is the fear with the thoughts mentioned at the start now on a scale of 0-100?">>
+<<input_field "Dialogue System" "How strong is the fear associated with the thoughts you mentioned at the start now on a scale of 0-100?">>
 <<set $fearLevelEnd to getInputText()>>
-: Thanks for playing this demo!
+<<post_answer BOFHandler $fearLevelStart $fearLevelEnd>>
 <<show_overview>>
 <<freeze_player Player>>
+===
+
+title: RedirectBOF
+tags:
+---
+: Thanks for playing this demo!
+: By clicking continue you will continue with the questionnaire.
+<<redirect_bof BOFHandler>>
 ===
