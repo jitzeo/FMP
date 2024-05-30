@@ -10,6 +10,7 @@ tags:
 <<declare $pressureCount to 0>>
 <<declare $selectedOption1 to false>>
 <<declare $selectedOption2 to false>>
+<<declare $hints to 0>>
 
 <<freeze_player Player>>
 : In this game you are playing as a person whose village has been tormented by a terrible storm. To stop the ongoing rampage, you have set out on an adventure through the mountainous valley to find the core of the storm to figure out what causes the storm and to drive the it away. 
@@ -182,7 +183,9 @@ Player: I should tread carefully.
 title: Remarks
 tags:
 ---
+<<freeze_player Player>>
 Player: I think I heard something move!
+<<freeze_player Player>>
 // Player: Is this where the stick came from?
 // Player: Could this have been the teeth of the monster?
 // Player: How do I get past this?
@@ -246,16 +249,32 @@ Player: What does this say about the monster?
     Player: But how could these hills move?
     Player: There is still a lot I don't know.
     Player: But I can move to new places now in this perspective!
-    <<freeze_player Player>>
     <<set_guide 1>>
+    <<freeze_player Player>>
     <<unlock_perspective Player>>
     <<enable_perspective Player>>
     <<instructions "Press [shift] to switch between perspectives." "shift">>
+    <<hint HintChallenge 60>>
+===
+
+title: HintChallenge
+tags:
+---
+<<freeze_player Player>>
+<<if $hints == 0>>
+    Player: There must be an area I haven't explored yet.
+    <<set $hints = $hints + 1>>
+    <<hint HintChallenge 30>>
+<<elseif $hints == 1>>
+    Player: Have I been to the tail of the monster yet?
+<<endif>>
+<<freeze_player Player>>
 ===
 
 title: Challenge
 tags:
 ---
+<<stop_hint>>
 <<freeze_player Player>>
 Player: I still don't know how to get to the flag...
 Player: How can I get on top of that cliff?
@@ -358,6 +377,7 @@ tags:
 ---
 <<activate_stamina Player false>>
 <<freeze_player Player>>
+<<move_player Player left 0.7>>
 <<change_perspective IslandManager>>
 Player: I... I did it!
 Player: I made it!
@@ -375,7 +395,6 @@ Player: Let's continue the journey
 <<set $fearLevelEnd to getInputText()>>
 <<post_answer BOFHandler {$fearLevelStart} {$fearLevelEnd}>>
 <<show_overview>>
-<<freeze_player Player>>
 ===
 
 title: RedirectBOF

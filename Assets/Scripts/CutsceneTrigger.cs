@@ -18,7 +18,7 @@ public class CutsceneTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player")
+        if(other.tag == "Player" && !dialogueRunner.IsDialogueRunning)
         {
             col.enabled = false;
             dialogueRunner.StartDialogue(node);

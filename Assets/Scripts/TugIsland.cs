@@ -35,7 +35,7 @@ public class TugIsland : MonoBehaviour
     private float minimalTug = 20f;
 
     [SerializeField] float turnTime = 0.5f;
-    [SerializeField] float tugFactor = 0.05f;
+    [SerializeField] float tugFactor = 10f;
     float t = 0f;
 
     // Start is called before the first frame update
@@ -67,13 +67,24 @@ public class TugIsland : MonoBehaviour
         if (Input.GetMouseButton(0) && tugAvailable)
         {
             mouseDelta = Input.mousePosition.x - mousePos;
-            rotationDelta = -mouseDelta * tugFactor;
+            rotationDelta = -mouseDelta * tugFactor * Time.deltaTime;
 
             if (currentRotation < 50 || currentRotation > 290 || (currentRotation < 75 && rotationDelta < 0) || (currentRotation > 265 && rotationDelta > 0))
             {
                 transform.RotateAround(rotateAxis.position, Vector3.up, rotationDelta);
                 player.RotateAround(rotateAxis.position, Vector3.up, rotationDelta);
             }
+        }
+
+        if(currentRotation > 75 && currentRotation < 265)
+        {
+            transform.RotateAround(rotateAxis.position, Vector3.up, -10f);
+            player.RotateAround(rotateAxis.position, Vector3.up, -10f);
+        }
+
+        if(Input.GetMouseButtonUp(0) && tugAvailable)
+        {
+            StartCoroutine(RotateIslandAfterRelease());
         }
 
         if (mouseDelta > minimalTug && tugAvailable)
