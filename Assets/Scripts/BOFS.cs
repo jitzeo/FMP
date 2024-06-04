@@ -83,7 +83,7 @@ public class BOFS : MonoBehaviour
 
     public void RedirectBOFDeprecated() {
         // Deprecated way of redirecting participants to the next page in the experiment
-        Application.ExternalEval("window.location.href = \"/redirect_next_page\";"); 
+        Application.ExternalEval("window.location.href = \"/redirect_to_page/questionnaire/post_state_anxiety\";"); 
 
         // Make the game simulation stop.
         Time.timeScale = 0f;
