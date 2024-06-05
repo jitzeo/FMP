@@ -316,9 +316,11 @@ Mysterious voice: <i>You</i> are no good...
 Player: I can at least try.
 Mysterious voice: <i>You</i> are worthless...
 
+<<fade FadeInLeft>>
 <<change_perspective IslandManager>>
 <<enable_perspective Player>>
 <<activate_dino end>>
+<<fade FadeOutLeft>>
 
 Player: The monster, it.. it's alive again!!
 Player: Remember, the monster is just the hills!
