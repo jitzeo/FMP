@@ -13,6 +13,8 @@ public class Stamina : MonoBehaviour
     [SerializeField] Slider staminaBar;
     [SerializeField] Animation refillStamina;
 
+    [SerializeField] Animator animatorPlayer;
+
     private float staminaMax = 10;
     private float staminaAmount = 10;
     private float staminaDecreasePerSecond = 10;
@@ -84,12 +86,14 @@ public class Stamina : MonoBehaviour
     private IEnumerator ResetStamina()
     {
         refillStamina.Play();
+        animatorPlayer.speed = 0.5f;
         yield return new WaitUntil(() => !refillStamina.isPlaying);
         if (!animInterupted)
         {
             staminaAmount = staminaMax;
         }
         staminaDepleted = false;
+        animatorPlayer.speed = 1f;
     }
 
     [YarnCommand("deplete_stamina")]

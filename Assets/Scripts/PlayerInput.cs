@@ -170,6 +170,10 @@ public class PlayerInput : MonoBehaviour
     public void Freeze()
     {
         freeze = !freeze;
+        if (freeze)
+        {
+            playerMovement.PlayerMove(0f, 0f); // Turns velocity of character controller to 0 to stop walking animation
+        }
     }
 
     [YarnCommand("enable_perspective")]
@@ -205,5 +209,6 @@ public class PlayerInput : MonoBehaviour
         yield return new WaitUntil(() => buttonPresses >= buttonPressGoal);
         buttonInstructionsObject.SetActive(false);
         spamButton = false;
+        playerMovement.PlayerMove(0f, 0f); // Turns velocity of character controller to 0 to stop walking animation
     }
 }

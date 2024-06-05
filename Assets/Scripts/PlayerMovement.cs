@@ -54,6 +54,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         bool isWalking = animator.GetBool("isWalking");
+        Debug.Log(controller.velocity.magnitude);
 
         if (isWalking && controller.velocity.magnitude == 0)
         {
@@ -130,7 +131,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
         yield return new WaitForSecondsRealtime(wait);
-        if(wait > 0)
+        PlayerMove(0f, 0f); // Turns velocity of character controller to 0 to stop walking animation
+        if (wait > 0)
         {
             moveInDirectionBool = false;
         }
