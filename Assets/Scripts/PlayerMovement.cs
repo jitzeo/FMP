@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Camera cam;
     [SerializeField] NavMeshAgent navMeshAgent;
     [SerializeField] CharacterController controller;
+    [SerializeField] Animator animator;
 
     public bool thirdDimension = true;
     
@@ -50,6 +51,17 @@ public class PlayerMovement : MonoBehaviour
         if (turn && moveToDirection != null)
         {
             LookDirection(moveToDirection);
+        }
+
+        bool isWalking = animator.GetBool("isWalking");
+
+        if (isWalking && controller.velocity.magnitude == 0)
+        {
+            animator.SetBool("isWalking", false);
+        } 
+        else if(!isWalking && controller.velocity.magnitude > 0)
+        {
+            animator.SetBool("isWalking", true);
         }
     }
 
