@@ -13,7 +13,7 @@ tags:
 <<declare $hints to 0>>
 
 <<freeze_player Player>>
-: In this game you are playing as a person whose village has been tormented by a terrible storm. To stop the ongoing rampage, you have set out on an adventure through the mountainous valley to find the core of the storm to figure out what causes the storm and to drive the it away. 
+: In this game you are playing as a person whose village has been tormented by a terrible storm. To stop the ongoing rampage, you have set out on an adventure through the mountainous valley to find the core of the storm to figure out what causes the storm and to drive it away. 
 : Determined you set out on this journey but you remain anxious as you are insecure about your ability to save the village. Along the path you encounter obstacles in the rugged terrain which are analogous of your anxiety standing in your way.
 <<fade FadeOutLeft>>
 Player: Okay, where do I need to go now.
@@ -403,6 +403,6 @@ title: RedirectBOF
 tags:
 ---
 : Thanks for playing this demo!
-: By clicking continue you will continue with the questionnaire.
-<<redirect_bof BOFHandler>>
+// : By clicking continue you will continue with the questionnaire.
+// <<redirect_bof BOFHandler>>
 ===
