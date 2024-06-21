@@ -25,11 +25,11 @@ public class Ladder : MonoBehaviour
             {
                 if(other.transform.position.y > checkStartPos.position.y) 
                 {
-                    playerMovement.OnLadder(startPosTop.position, this, direction);
+                    playerMovement.OnLadder(startPosTop.position, direction);
                 }
                 else
                 {
-                    playerMovement.OnLadder(startPosBot.position, this, direction);
+                    playerMovement.OnLadder(startPosBot.position, direction);
                 }     
             }
         }

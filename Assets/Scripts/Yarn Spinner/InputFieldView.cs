@@ -37,11 +37,20 @@ public class InputFieldView : MonoBehaviour
     }
 
     [YarnCommand("input_field")]
-    public IEnumerator InputView(string lastLine)
+    public IEnumerator InputView(string lastLine, bool numeric = false)
     {
         text.text = lastLine;
         inputView.SetActive(true);
         input.Select();
+
+        if (numeric)
+        {
+            input.contentType = TMP_InputField.ContentType.IntegerNumber;
+        }
+        else
+        {
+            input.contentType = TMP_InputField.ContentType.Standard;
+        }
         yield return new WaitUntil(() => inputComplete);
         input.text = "";
         inputView.SetActive(false);

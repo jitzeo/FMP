@@ -8,7 +8,6 @@ using Yarn.Unity;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] Camera cam;
-    [SerializeField] NavMeshAgent navMeshAgent;
     [SerializeField] CharacterController controller;
     [SerializeField] Animator animator;
 
@@ -33,7 +32,6 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         cam = GameObject.Find("Main Camera").GetComponent<Camera>();
-        navMeshAgent = GetComponent<NavMeshAgent>();
         controller = GetComponent<CharacterController>();
     }
     private void Update()
@@ -167,12 +165,10 @@ public class PlayerMovement : MonoBehaviour
     [Header("Ladder movement:")]
     public bool onLadder;
     public bool exitLadder;
-    private Ladder activeLadder;
     
-    public void OnLadder(Vector3 startPos, Ladder currentLadder, Vector3 direction)
+    public void OnLadder(Vector3 startPos, Vector3 direction)
     {
         Teleport(startPos);
-        activeLadder = currentLadder;
         onLadder = true;
         RotatePlayer(direction);
     }
@@ -227,16 +223,5 @@ public class PlayerMovement : MonoBehaviour
             direction = Vector3.right;
         }
         transform.rotation = Quaternion.LookRotation(direction);
-    }
-
-    public void MoveAgent(Vector3 mousePos)
-    {
-        Ray ray = Camera.main.ScreenPointToRay(mousePos);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit))
-        {
-            navMeshAgent.destination = hit.point;
-        }
     }
 }

@@ -42,15 +42,26 @@ public class PlayerInput : MonoBehaviour
     private void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
-        islandManager = GameObject.Find("IslandManager").GetComponent<IslandManager>();
         //center = GameObject.Find("Center");
-        dialogueRunner = FindObjectOfType<DialogueRunner>();
-
         buttonInstructionsText = "Press {0} {1} times to {2}";
     }
 
     void Update()
     {
+        // Code to make sure WebGL does not captue all keyboard input when not focused.
+        #if !UNITY_EDITOR && UNITY_WEBGL
+            if (!Application.isFocused && !focus)
+            {
+                WebGLInput.captureAllKeyboardInput = false;
+                focus = true;
+            }
+            if (Application.isFocused && focus)
+            {
+                WebGLInput.captureAllKeyboardInput = true;
+                focus = false;
+            }
+        #endif
+
         x = Input.GetAxisRaw("Horizontal");
         z = Input.GetAxisRaw("Vertical");
         if (!freeze)

@@ -53,7 +53,7 @@ tags:
     Player: I am worthless...
     <<input_field "Dialogue System" "What thoughts of you could be your cliff? Which you feel are impossible to get over.">>
     <<set $anxiety to getInputText()>>
-    <<input_field "Dialogue System" "How strong is the fear associated with this thought on a scale of 0-100?">>
+    <<input_field "Dialogue System" "How strong is the fear associated with this thought on a scale of 0-100?" true>>
     <<set $fearLevelStart to getInputText()>>
     <<jump Transition>>
 <<endif>>
@@ -393,7 +393,7 @@ Player: I need to further learn about this voice if I will be able to control it
 Player: This skill of taking a different perspective will be useful.
 Player: I still have much to learn, but I already made it to here.
 Player: Let's continue the journey
-<<input_field "Dialogue System" "How strong is the fear associated with the thoughts you mentioned at the start now on a scale of 0-100?">>
+<<input_field "Dialogue System" "How strong is the fear associated with the thoughts you mentioned at the start now on a scale of 0-100?" true>>
 <<set $fearLevelEnd to getInputText()>>
 <<post_answer BOFHandler {$fearLevelStart} {$fearLevelEnd}>>
 <<show_overview>>
