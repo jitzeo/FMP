@@ -25,15 +25,9 @@ public class IslandManager : MonoBehaviour
 
     private void Start()
     {
-        playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
-        //mainIsland = GameObject.Find("Main Island");
-        //island2D = GameObject.Find("2D Island");
         islands.Add("main", mainIsland);
         islands.Add("2D", island2D);
         islands.Add("start", startIsland);
-
-        camMain = GameObject.Find("Main Camera").GetComponent<Camera>();
-        cam2D = GameObject.Find("2D Camera").GetComponent<Camera>();
     }
 
     public void EnableIsland(string id, bool enable)

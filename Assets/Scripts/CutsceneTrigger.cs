@@ -13,7 +13,6 @@ public class CutsceneTrigger : MonoBehaviour
     private void Start()
     {
         col = GetComponent<Collider>();
-        dialogueRunner = FindObjectOfType<DialogueRunner>();
     }
 
     private void OnTriggerEnter(Collider other)

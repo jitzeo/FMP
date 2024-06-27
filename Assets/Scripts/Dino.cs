@@ -17,8 +17,6 @@ public class Dino : MonoBehaviour
     private void Start()
     {
         startPos = transform.position;
-        playerSpawn = GameObject.Find("DinoPlayerSpawn").GetComponent<Transform>();
-        //dinoPassive = GameObject.Find("DinoPassive");
     }
 
     private void FixedUpdate()
@@ -49,7 +47,7 @@ public class Dino : MonoBehaviour
     }
 
     [YarnCommand("unfreeze_dino")]
-    public void Unfreeze()
+    public void UnfreezeDino()
     {
         freeze = false;
     }

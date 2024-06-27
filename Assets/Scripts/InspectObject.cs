@@ -9,11 +9,6 @@ public class InspectObject : MonoBehaviour, IInteractable
     [SerializeField] string dialogueNode;
     [SerializeField] GameObject canvas;
 
-    void Start()
-    {
-        dialogueRunner = FindObjectOfType<DialogueRunner>();
-    }
-
     public void InteractLogic()
     {
         dialogueRunner.StartDialogue(dialogueNode);

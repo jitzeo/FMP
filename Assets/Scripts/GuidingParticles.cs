@@ -17,7 +17,6 @@ public class GuidingParticles : MonoBehaviour
     }
     void OnEnable()
     {
-        Debug.Log("play particles: " + activeParticleIndex);
         activeParticleSystem = particles[activeParticleIndex];
         activeParticleSystem.Play();
     }

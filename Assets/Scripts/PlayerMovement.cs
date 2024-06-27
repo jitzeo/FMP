@@ -26,14 +26,10 @@ public class PlayerMovement : MonoBehaviour
     private bool turn;
 
     [Header("Stamina")]
+    [SerializeField] PlayerInput playerInput;
     [SerializeField] Stamina stamina;
     public bool staminaActive;
 
-    private void Start()
-    {
-        cam = GameObject.Find("Main Camera").GetComponent<Camera>();
-        controller = GetComponent<CharacterController>();
-    }
     private void Update()
     {
         if (moveToPositionBool && moveToPosition != null)
@@ -52,13 +48,12 @@ public class PlayerMovement : MonoBehaviour
         }
 
         bool isWalking = animator.GetBool("isWalking");
-        Debug.Log(controller.velocity.magnitude);
 
-        if (isWalking && controller.velocity.magnitude == 0)
+        if (isWalking && (controller.velocity.x == 0 && controller.velocity.z == 0))
         {
             animator.SetBool("isWalking", false);
         } 
-        else if(!isWalking && controller.velocity.magnitude > 0)
+        else if(!isWalking && (controller.velocity.x != 0 || controller.velocity.z != 0))
         {
             animator.SetBool("isWalking", true);
         }
@@ -83,17 +78,20 @@ public class PlayerMovement : MonoBehaviour
         else if (!thirdDimension && (x != 0 || z != 0))
         {
             direction = new Vector3(x, 0f, 0f).normalized * velocity;
-            direction.y = gravity;
         }
-        else if ((x != 0 || z != 0))
+        else if (x != 0 || z != 0)
         {
             direction = new Vector3(x, 0f, z).normalized * velocity;
             float angle = Vector2.SignedAngle(new Vector2(cam.transform.forward.x, cam.transform.forward.z), Vector2.up);
             direction = Quaternion.AngleAxis(angle, Vector3.up) * direction;
+        }
+
+        if (!onLadder)
+        {
             direction.y = gravity;
         }
 
-        if (staminaActive)
+        if (staminaActive && !playerInput.freezePlayer)
         {
             float staminaFactor = stamina.UpdateStamina(x, z);
             direction = direction * staminaFactor;
@@ -105,7 +103,7 @@ public class PlayerMovement : MonoBehaviour
             //Debug.Log("Movement vector: " + direction * Time.deltaTime + " direction: " +direction + "deltaTime: " + Time.deltaTime);
         }
 
-        if (direction != Vector3.zero && !onLadder)
+        if (direction.x != 0 || direction.z != 0 && !onLadder)
         {
             LookDirection(direction);
         } 
@@ -193,12 +191,18 @@ public class PlayerMovement : MonoBehaviour
 
         if (thirdDimension)
         {
-            Ray ray = new Ray(transform.position + new Vector3(0f, -1.5f, 1f), Vector3.forward);
-            RaycastHit hit;
+            Ray rayLeft = new Ray(transform.position + new Vector3(-0.5f, -0.96f, 1f), Vector3.forward);
+            RaycastHit hitLeft;
+            Ray rayRight = new Ray(transform.position + new Vector3(0.5f, -0.96f, 1f), Vector3.forward); ;
+            RaycastHit hitRight;
 
-            if (Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(rayLeft, out hitLeft, 50f))
             {
-                transform.position = new Vector3(transform.position.x, transform.position.y, hit.point.z + 1f);
+                transform.position = new Vector3(transform.position.x, transform.position.y, hitLeft.point.z + 1f);
+            } 
+            else if (Physics.Raycast(rayRight, out hitRight, 50f))
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y, hitRight.point.z + 1f);
             }
         }
         else

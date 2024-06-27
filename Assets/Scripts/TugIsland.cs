@@ -160,6 +160,7 @@ public class TugIsland : MonoBehaviour
         StartCoroutine(fade.FadeTransition("FadeOutLeft"));
         dialogueRunner.StartDialogue("Investigate2");
         islandManager.ChangePerspective();
+        player.GetComponent<CharacterController>().enabled = true;
         this.enabled = false;
     }
 
@@ -174,5 +175,7 @@ public class TugIsland : MonoBehaviour
         }
         tugActive = activate;
         tagInstructions.SetActive(activate);
+        player.GetComponent<CharacterController>().enabled = false;
+
     }
 }

@@ -6,14 +6,11 @@ using Yarn.Unity;
 public class Fade : MonoBehaviour
 {
     [SerializeField] DialogueRunner dialogueRunner;
-    private Animation anim;
-    //[SerializeField] List<AnimationClip> clipList;
+    [SerializeField] Animation anim;
 
     private void Start()
     {
         dialogueRunner.AddCommandHandler<string>("fade", FadeTransition);
-        
-        anim = GetComponent<Animation>();
     }
 
     public IEnumerator FadeTransition(string fadeClip)

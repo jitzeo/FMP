@@ -94,6 +94,7 @@ public class Stamina : MonoBehaviour
         }
         staminaDepleted = false;
         animatorPlayer.speed = 1f;
+        animInterupted = false;
     }
 
     [YarnCommand("deplete_stamina")]

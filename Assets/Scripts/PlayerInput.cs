@@ -12,6 +12,7 @@ public class PlayerInput : MonoBehaviour
     [Header("Player movement")]
     [SerializeField] PlayerMovement playerMovement;
     [SerializeField] IslandManager islandManager;
+    [SerializeField] CharacterController controller;
     private float x;
     private float z;
 
@@ -35,14 +36,14 @@ public class PlayerInput : MonoBehaviour
     [Header("Player control features")]
     [SerializeField] bool unlockedChangedPerspective;
     [SerializeField] bool changePerspectiveEnabled;
-    private bool freeze;
+    public bool freezePlayer;
 
     private IInteractable interactableInstance;
 
+    private bool focus;
+
     private void Start()
     {
-        playerMovement = GetComponent<PlayerMovement>();
-        //center = GameObject.Find("Center");
         buttonInstructionsText = "Press {0} {1} times to {2}";
     }
 
@@ -62,14 +63,11 @@ public class PlayerInput : MonoBehaviour
             }
         #endif
 
-        x = Input.GetAxisRaw("Horizontal");
-        z = Input.GetAxisRaw("Vertical");
-        if (!freeze)
+        
+        if (!freezePlayer)
         {
-            /*if (x != 0 || z != 0)
-            {
-                playerMovement.PlayerMove(x, z);
-            }*/
+            x = Input.GetAxisRaw("Horizontal");
+            z = Input.GetAxisRaw("Vertical");
             playerMovement.PlayerMove(x, z);
         
 
@@ -100,7 +98,7 @@ public class PlayerInput : MonoBehaviour
                 cam.orthographicSize += zoomSpeed * Time.deltaTime;
             }
 
-            if (unlockedChangedPerspective && changePerspectiveEnabled && (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift)))
+            if (unlockedChangedPerspective && changePerspectiveEnabled && controller.isGrounded && (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift)))
             {
                 if (cam.enabled)
                 {
@@ -119,6 +117,10 @@ public class PlayerInput : MonoBehaviour
                     islandManager.ChangePerspective();
                 }
             }
+        }
+        else
+        {
+            playerMovement.PlayerMove(0, 0);
         }
 
         if (Input.GetKeyDown(KeyCode.Return) && dialogueRunner.IsDialogueRunning)
@@ -147,22 +149,6 @@ public class PlayerInput : MonoBehaviour
         {
             pressingButton = false;
         }
-
-        // Mobile control
-        /*if(Input.touchCount > 0)
-        {
-            touch = Input.GetTouch(0);
-            if(touch.phase == TouchPhase.Began)
-            {
-                Ray ray = Camera.main.ScreenPointToRay(touch.position);
-                RaycastHit hit;
-
-                if(Physics.Raycast(ray, out hit))
-                {
-                    navMeshAgent.destination = hit.point;
-                }
-            }
-        }*/
     }
 
     
@@ -178,10 +164,10 @@ public class PlayerInput : MonoBehaviour
     }
 
     [YarnCommand("freeze_player")]
-    public void Freeze()
+    public void FreezePlayer()
     {
-        freeze = !freeze;
-        if (freeze)
+        freezePlayer = !freezePlayer;
+        if (freezePlayer)
         {
             playerMovement.PlayerMove(0f, 0f); // Turns velocity of character controller to 0 to stop walking animation
         }

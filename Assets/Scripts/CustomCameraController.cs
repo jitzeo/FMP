@@ -42,9 +42,6 @@ namespace TMPro.Examples
         private Vector3 moveVector;
         private float mouseWheel;
 
-        // Controls for Touches on Mobile devices
-        //private float prev_ZoomDelta;
-
 
         private const string event_SmoothingValue = "Slider - Smoothing Value";
         private const string event_FollowDistance = "Slider - Camera Zoom";
@@ -84,9 +81,6 @@ namespace TMPro.Examples
         // Update is called once per frame
         void LateUpdate()
         {
-            //GetPlayerInput();
-
-
             // Check if we still have a valid target
             if (CameraTarget != null)
             {
@@ -255,30 +249,6 @@ namespace TMPro.Examples
                     dummyTarget.Translate(-moveVector, Space.World);
 
                 }
-
-            }
-
-            // Check Pinching to Zoom in - out on Mobile device
-            if (touchCount == 2)
-            {
-                Touch touch0 = Input.GetTouch(0);
-                Touch touch1 = Input.GetTouch(1);
-
-                Vector2 touch0PrevPos = touch0.position - touch0.deltaPosition;
-                Vector2 touch1PrevPos = touch1.position - touch1.deltaPosition;
-
-                float prevTouchDelta = (touch0PrevPos - touch1PrevPos).magnitude;
-                float touchDelta = (touch0.position - touch1.position).magnitude;
-
-                float zoomDelta = prevTouchDelta - touchDelta;
-
-                if (zoomDelta > 0.01f || zoomDelta < -0.01f)
-                {
-                    FollowDistance += zoomDelta * 0.25f;
-                    // Limit FollowDistance between min & max values.
-                    FollowDistance = Mathf.Clamp(FollowDistance, MinFollowDistance, MaxFollowDistance);
-                }
-
 
             }
 

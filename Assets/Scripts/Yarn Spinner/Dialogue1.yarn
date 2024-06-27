@@ -148,12 +148,7 @@ tags:
 <<freeze_player Player>>
 Player: There are spikes here, I can't get past them.
 Player: Where have I seen these sharp spikes before?
-// -> Player: Near the cliffside.
-// 	Player: Were there really any spikes there?
-// -> Player: The monster.
 Player: The monster's teeth looked a lot like them!
-// -> Player: Could be a deja-vu.
-// 	Player: Hmm, could be the case.
 Player: How do I get past these spikes though?
 Player: Maybe a different perspective might help me find a clue.
 <<freeze_player Player>>
@@ -186,11 +181,6 @@ tags:
 <<freeze_player Player>>
 Player: I think I heard something move!
 <<freeze_player Player>>
-// Player: Is this where the stick came from?
-// Player: Could this have been the teeth of the monster?
-// Player: How do I get past this?
-// Player: The spikes are gone now!
-// Player: I am making progress!
 ===
 
 title: IdentifyThoughts
@@ -205,20 +195,6 @@ Player: I found spikes which I saw on the monster as well...
 Player: There was a tree from which the stick must have dropped...
 Player: But then there was this large footprint as well.
 <<jump Identify1>>
-
-<<change_perspective IslandManager>>
-//This text is currently not shown to the player
-Player: The storm is back.
-Player: The monster still seems to be passed out.
-Player: But what's making this happen?
-//?Option?
-Player: My thoughts! The storm is using my thoughts to make me anxious. 
-Player: But it all seems so real...
-Player: How do I know what to believe?
-Player: At least I know how this shift happens. That's a first step to gain control.
-Player: But this shifted landscape allows me to reach new areas.
-Player: Let's explore further.
-<<freeze_player Player>>
 ===
 
 title: Identify1
@@ -269,6 +245,7 @@ tags:
     Player: Have I been to the tail of the monster yet?
 <<endif>>
 <<freeze_player Player>>
+<<instructions "You can press [shift] to switch between perspectives." "shift">>
 ===
 
 title: Challenge
@@ -395,7 +372,7 @@ Player: I still have much to learn, but I already made it to here.
 Player: Let's continue the journey
 <<input_field "Dialogue System" "How strong is the fear associated with the thoughts you mentioned at the start now on a scale of 0-100?" true>>
 <<set $fearLevelEnd to getInputText()>>
-<<post_answer BOFHandler {$fearLevelStart} {$fearLevelEnd}>>
+//<<post_answer BOFHandler {$fearLevelStart} {$fearLevelEnd}>>
 <<show_overview>>
 ===
 
@@ -405,4 +382,5 @@ tags:
 : Thanks for playing this demo!
 // : By clicking continue you will continue with the questionnaire.
 // <<redirect_bof BOFHandler>>
+<<freeze_player Player>>
 ===

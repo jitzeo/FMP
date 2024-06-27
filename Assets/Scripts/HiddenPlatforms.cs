@@ -5,16 +5,10 @@ using UnityEngine;
 public class HiddenPlatforms : MonoBehaviour, ISwitchable
 {
     [SerializeField] Vector3 endPosition;
-    private Vector3 startPosition;
     private float moveSpeed = 2f;
 
     private bool isActive;
     public bool IsActive => isActive;
-
-    private void Start()
-    {
-        startPosition = transform.position;
-    }
 
     public void Activate()
     {

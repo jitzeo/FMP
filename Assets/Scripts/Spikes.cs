@@ -8,7 +8,7 @@ public class Spikes : MonoBehaviour, ISwitchable
     private Vector3 startPosition;
     private float moveSpeed = 3f;
 
-    private Collider col;
+    [SerializeField] Collider col;
 
     [SerializeField] bool isActive;
     public bool IsActive => isActive;
@@ -16,7 +16,6 @@ public class Spikes : MonoBehaviour, ISwitchable
     private void Start()
     {
         startPosition = transform.position;
-        col = GetComponent<BoxCollider>();
     }
 
     public void Activate()
@@ -34,11 +33,11 @@ public class Spikes : MonoBehaviour, ISwitchable
         if (isActive)
         {
             transform.position = Vector3.Lerp(transform.position, startPosition, Time.deltaTime * moveSpeed);
-            GetComponent<Collider>().enabled = true;
+            col.enabled = true;
         } else
         {
             transform.position = Vector3.Lerp(transform.position, startPosition + deltaPosition, Time.deltaTime * moveSpeed);
-            GetComponent<Collider>().enabled = false;
+            col.enabled = false;
         }
     }
 }
